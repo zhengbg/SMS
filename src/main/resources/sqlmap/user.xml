@@ -4,19 +4,94 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ice.sms.dao.UserDao">
-
     <resultMap id="userMap" type="userDo">
         <id column="u_id" property="userId"></id>
         <result column="u_name" property="userName"></result>
         <result column="u_password" property="password"></result>
         <result column="u_type" property="type"></result>
         <result column="u_phone" property="phone"></result>
+        <result column="locked" property="locked"></result>
+        <result column="salt" property="salt"></result>
         <result column="u_create_time" property="createTime"></result>
         <result column="u_last_update_time" property="lastUpdateTime"></result>
     </resultMap>
+    <!--新增用户-->
+    <insert id="addUser" parameterType="userDo">
+        INSERT INTO t_user (u_id,u_name,u_password,u_type,u_phone,locked,salt,u_create_time,u_last_update_time)
+        VALUES
+        (#{userId},#{userName},#{password},#{type},#{phone},#{locked},#{salt},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+    </insert>
+    <!--修改用户-->
+    <update id="updateUser" parameterType="userDo">
+    UPDATE t_user
+        <set>
+            <if test="userName != null">
+                u_name = #{userName},
+            </if>
+            <if test="password != null">
+                u_password = #{password},
+            </if>
+            <if test="type != null">
+                u_type = #{type},
+            </if>
+            <if test="phone != null">
+                u_phone = #{phone},
+            </if>
+            <if test="locked != null">
+                locked = #{locked},
+            </if>
+            last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+        </set>
+        WHERE
+        u_id = #{userId}
+        AND
+        u_last_update_time = #{lastUpdateTime}
+    </update>
+    <!--批量删除-->
+    <delete id="batchDeleteUser" parameterType="java.util.List" >
+        DELETE  FROM  t_user WHERE u_id IN
+        <foreach collection="list" item="userId" index="index" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+    <!--根据用户ID 查询用户-->
     <select id="queryUserById" resultMap="userMap" parameterType="java.lang.String">
-        SELECT t.u_id,t.u_name,t.u_password,t.u_type,t.u_phone,t.u_create_time,t.u_last_update_time
+        SELECT t.u_id,t.u_name,t.u_password,t.u_type,t.u_phone,t.locked,t.salt,t.u_create_time,t.u_last_update_time
         FROM t_user t
         WHERE t.u_id = #{userId}
+    </select>
+    <!--查询用户列表-->
+    <select id="queryUserList" resultMap="userMap" parameterType="java.util.Map">
+        SELECT t.u_id,t.u_name,t.u_password,t.u_type,t.u_phone,t.locked,t.salt,t.u_create_time,t.u_last_update_time
+        FROM t_user t
+        WHERE 1=1
+        <if test="userId != null">
+            AND u_id = #{userId}
+        </if>
+        <if test="userName != null">
+            AND u_name = #{userName}
+        </if>
+        <if test="type != null">
+            AND u_type = #{type}
+        </if>
+        ORDER BY u_create_time ASC
+        <if test="start != null and size != null">
+            LIMIT #{start}, #{size}
+        </if>
+    </select>
+    <!--计算查询总数-->
+    <select id="count" parameterType="java.util.Map" resultType="int">
+    SELECT COUNT(*)
+    FROM t_user
+    WHERE 1=1
+        <if test="userId != null">
+            AND u_id = #{userId}
+        </if>
+        <if test="userName != null">
+            AND u_name = #{userName}
+        </if>
+        <if test="type != null">
+            AND u_type = #{type}
+        </if>
     </select>
 </mapper>

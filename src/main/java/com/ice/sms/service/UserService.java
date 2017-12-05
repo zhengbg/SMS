@@ -10,8 +10,13 @@
  */
 package com.ice.sms.service;
 
+import com.ice.sms.common.base.ResultInfo;
+import com.ice.sms.dto.user.request.BatchDelUserReq;
 import com.ice.sms.dto.user.request.QueryByIdReq;
+import com.ice.sms.dto.user.request.QueryUserListReq;
 import com.ice.sms.dto.user.response.QueryByIdResp;
+import com.ice.sms.dto.user.response.QueryUserListResp;
+import com.ice.sms.dto.user.vo.UserVo;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -24,4 +29,12 @@ import com.ice.sms.dto.user.response.QueryByIdResp;
 public interface UserService
 {
 	QueryByIdResp queryUserById (QueryByIdReq req);
+
+	QueryUserListResp queryUserList (QueryUserListReq req);
+
+	ResultInfo batchDelUser(BatchDelUserReq req);
+
+	ResultInfo updateUser (UserVo userVo);
+
+	ResultInfo addUser (UserVo userVo);
 }

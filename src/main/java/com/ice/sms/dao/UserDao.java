@@ -12,6 +12,9 @@ package com.ice.sms.dao;
 
 import com.ice.sms.entity.UserDo;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <一句话功能简述> <功能详细描述>
  *
@@ -22,5 +25,42 @@ import com.ice.sms.entity.UserDo;
  */
 public interface UserDao
 {
+	/**
+	 * 根据用户帐号查询
+	 * @param userId
+	 * @return
+	 */
 	UserDo queryUserById (String userId);
+
+	/**
+	 * 新增用户信息
+	 * @param userDo
+	 */
+	void addUser (UserDo userDo);
+
+	/**
+	 * 修改用户信息
+	 * @param userDo
+	 */
+	void updateUser (UserDo userDo);
+
+	/**
+	 * 批量删除用户信息
+	 * @param userIdList
+	 */
+	void batchDeleteUser (List<String> userIdList);
+
+	/**
+	 * 分页查询统计个数
+	 * @param params
+	 * @return
+	 */
+	int count (Map<String,Object> params);
+
+	/**
+	 * 查询用户列表
+	 * @param params
+	 * @return
+	 */
+	List<UserDo> queryUserList(Map<String,Object> params);
 }

@@ -10,10 +10,14 @@
  */
 package com.ice.sms.service.impl;
 
+import com.ice.sms.common.base.ResultInfo;
 import com.ice.sms.common.constant.Constant;
 import com.ice.sms.dao.UserDao;
+import com.ice.sms.dto.user.request.BatchDelUserReq;
 import com.ice.sms.dto.user.request.QueryByIdReq;
+import com.ice.sms.dto.user.request.QueryUserListReq;
 import com.ice.sms.dto.user.response.QueryByIdResp;
+import com.ice.sms.dto.user.response.QueryUserListResp;
 import com.ice.sms.dto.user.vo.UserVo;
 import com.ice.sms.entity.UserDo;
 import com.ice.sms.service.UserService;
@@ -65,5 +69,29 @@ public class UserServiceImpl implements UserService
 
 		LOGGER.debug (String.format ("SMS.UserServiceImpl.queryUserById.resp:%s", resp));
 		return resp;
+	}
+
+	@Override
+	public QueryUserListResp queryUserList (QueryUserListReq req)
+	{
+		return null;
+	}
+
+	@Override
+	public ResultInfo batchDelUser (BatchDelUserReq req)
+	{
+		return null;
+	}
+
+	@Override
+	public ResultInfo updateUser (UserVo userVo)
+	{
+		return null;
+	}
+
+	@Override
+	public ResultInfo addUser (UserVo userVo)
+	{
+		return null;
 	}
 }

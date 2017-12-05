@@ -1,5 +1,5 @@
 /**
- * 文 件 名:  UserDo
+ * 文 件 名:  QueryUserListResp
  * 版    权:  Quanten Teams. Copyright YYYY-YYYY,  All rights reserved
  * 描    述:  <描述>
  * 修 改 人:  huangsongbo
@@ -8,13 +8,15 @@
  * 修改单号:  <修改单号>
  * 修改内容:  <修改内容>
  */
-package com.ice.sms.entity;
+package com.ice.sms.dto.user.response;
 
+import com.ice.sms.common.base.ResultInfo;
+import com.ice.sms.dto.user.vo.UserVo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.io.Serializable;
+import java.util.List;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -27,20 +29,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class UserDo implements Serializable
+public class QueryUserListResp extends ResultInfo
 {
-	private String userId;
-	private String userName;
-	private String password;
-	private String type;
-	private String phone;
-	private String salt;
-	private String locked;
-	private String createTime;
-	private String lastUpdateTime;
-	//加盐
-	public String getCredentialsSalt ()
-	{
-		return this.userId + this.salt;
-	}
+	private List<UserVo> userVoList;
+	private int total;
 }
