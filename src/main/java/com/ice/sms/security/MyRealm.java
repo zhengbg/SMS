@@ -1,11 +1,15 @@
 package com.ice.sms.security;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
+import com.ice.sms.common.constant.Constant;
+import com.ice.sms.common.exception.SMSException;
+import com.ice.sms.dao.UserDao;
+import com.ice.sms.entity.UserDo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -15,45 +19,43 @@ import org.apache.shiro.subject.PrincipalCollection;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public class MyRealm extends AuthorizingRealm {
-/*	@Autowired
-	private UserService userService;*/
+public class MyRealm extends AuthorizingRealm
+{
+	@Autowired
+	private UserDao userDao;
 
 	/* 权限认证 */
-	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+	protected AuthorizationInfo doGetAuthorizationInfo (PrincipalCollection principals)
+	{
 		return null;
 	}
 
 	/* 登录认证 */
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		/*String username = (String) token.getPrincipal();
+	protected AuthenticationInfo doGetAuthenticationInfo (AuthenticationToken token) throws AuthenticationException
+	{
 
-		QryUserReq req = new QryUserReq();
-
-		req.setUsername(username);
-
-		QryUserResp resp = userService.queryUser(req);
-
-		User user = null;
-
-		if (null != resp && !resp.getUserList().isEmpty()) {
-			user = resp.getUserList().get(0);
+		String userId = (String) token.getPrincipal ();
+		UserDo user = null;
+		try
+		{
+			userDao.queryUserById (userId);
 		}
-
-		if (user == null) {
+		catch (Exception e)
+		{
+			throw new SMSException (Constant.Common.UNKNOWN_ERROR_CODE, Constant.Common.UNKNOWN_ERROR_DESC);
+		}
+		if (user == null)
+		{
 			// 用户名不存在抛出异常
-			throw new UnknownAccountException();
+			throw new UnknownAccountException ();
 		}
-
-		if (user.getLocked() == 0) {
+		if (! "0".equals (user.getLocked ()))
+		{
 			// 用户被管理员锁定抛出异常
-			throw new LockedAccountException();
+			throw new LockedAccountException ();
 		}
-
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUsername(),
-				user.getPassword(), ByteSource.Util.bytes(user.getCredentialsSalt()), getName());
-
-		return authenticationInfo;*/
-		return null;
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo (user.getUserId (),
+				user.getPassword (), ByteSource.Util.bytes (user.getCredentialsSalt ()), getName ());
+		return authenticationInfo;
 	}
 }

@@ -36,4 +36,11 @@ public class UserDo implements Serializable
 	private String phone;
 	private String createTime;
 	private String lastUpdateTime;
+	private String salt;
+	private String locked;
+	//加盐
+	public String getCredentialsSalt ()
+	{
+		return this.userId + this.salt;
+	}
 }

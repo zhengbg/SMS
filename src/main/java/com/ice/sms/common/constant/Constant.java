@@ -29,5 +29,8 @@ public interface Constant
 		//执行sql异常
 		String SQL_EXCEPTION_CODE = "200001";
 		String SQL_EXCEPTION_DESC = "Execute Sql Exception";
+
+		String UNKNOWN_ERROR_CODE ="999999";
+		String UNKNOWN_ERROR_DESC = "System inner error!";
 	}
 }
