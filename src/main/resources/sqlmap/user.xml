@@ -5,4 +5,18 @@
 
 <mapper namespace="com.ice.sms.dao.UserDao">
 
+    <resultMap id="userMap" type="userDo">
+        <id column="u_id" property="userId"></id>
+        <result column="u_name" property="userName"></result>
+        <result column="u_password" property="password"></result>
+        <result column="u_type" property="type"></result>
+        <result column="u_phone" property="phone"></result>
+        <result column="u_create_time" property="createTime"></result>
+        <result column="u_last_update_time" property="lastUpdateTime"></result>
+    </resultMap>
+    <select id="queryUserById" resultMap="userMap" parameterType="java.util.String">
+        SELECT t.u_id,t.u_name,t.u_password,t.u_type,t.u_phone,t.u_create_time,t.u_last_update_time
+        FROM t_user t
+        WHERE t.u_id = #{userId}
+    </select>
 </mapper>

@@ -1,5 +1,5 @@
 /**
- * 文 件 名:  EmployDo
+ * 文 件 名:  UserVo
  * 版    权:  Quanten Teams. Copyright YYYY-YYYY,  All rights reserved
  * 描    述:  <描述>
  * 修 改 人:  huangsongbo
@@ -8,7 +8,7 @@
  * 修改单号:  <修改单号>
  * 修改内容:  <修改内容>
  */
-package com.ice.sms.entity;
+package com.ice.sms.dto.employee.vo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,13 +27,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class EmployDo implements Serializable
+public class UserVo implements Serializable
 {
-	private Integer employeeId;
-	private String employeeName;
-	private String password;
-	private String type;
-	private String phone;
-	private String createTime;
-	private String lastUpdateTime;
+
 }

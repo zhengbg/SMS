@@ -17,10 +17,10 @@
 	<!--对静态资源的访问,两种方法选其一都可以 -->
 	<!--<mvc:default-servlet-handler/> -->
 	<mvc:resources location="/js/" mapping="/js/**" />
-	<!--<mvc:resources location="/img/" mapping="/img/**" />
+	<mvc:resources location="/img/" mapping="/img/**" />
 	<mvc:resources location="/css/" mapping="/css/**" />
 	<mvc:resources location="/fonts/" mapping="/fonts/**" />
-	<mvc:resources location="/resources/" mapping="/resources/**" />-->
+	<mvc:resources location="/i/" mapping="/i/**" />
 
 	<!-- Default ViewResolver对模型视图名称的解析即在模型视图名称添加前后缀 -->
 	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
