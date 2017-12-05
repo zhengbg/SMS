@@ -10,6 +10,8 @@
  */
 package com.ice.sms.dao;
 
+import com.ice.sms.entity.UserDo;
+
 /**
  * <一句话功能简述> <功能详细描述>
  *
@@ -20,4 +22,5 @@ package com.ice.sms.dao;
  */
 public interface UserDao
 {
+	UserDo queryUserById (String userId);
 }

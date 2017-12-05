@@ -10,6 +10,9 @@
  */
 package com.ice.sms.service;
 
+import com.ice.sms.dto.user.request.QueryByIdReq;
+import com.ice.sms.dto.user.response.QueryByIdResp;
+
 /**
  * <一句话功能简述> <功能详细描述>
  *
@@ -20,4 +23,5 @@ package com.ice.sms.service;
  */
 public interface UserService
 {
+	QueryByIdResp queryUserById (QueryByIdReq req);
 }

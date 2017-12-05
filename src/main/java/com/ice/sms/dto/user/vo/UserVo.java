@@ -1,5 +1,5 @@
 /**
- * 文 件 名:  Constant
+ * 文 件 名:  UserVo
  * 版    权:  Quanten Teams. Copyright YYYY-YYYY,  All rights reserved
  * 描    述:  <描述>
  * 修 改 人:  huangsongbo
@@ -8,7 +8,13 @@
  * 修改单号:  <修改单号>
  * 修改内容:  <修改内容>
  */
-package com.ice.sms.common.constant;
+package com.ice.sms.dto.user.vo;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -18,16 +24,14 @@ package com.ice.sms.common.constant;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public interface Constant
+@Getter
+@Setter
+@ToString
+public class UserVo implements Serializable
 {
-	interface Common
-	{
-		//统一成功返回
-		String SUCCESS_CODE = "000000";
-		String SUCCESS_DESC = "SUCCESS";
-
-		//执行sql异常
-		String SQL_EXCEPTION_CODE = "200001";
-		String SQL_EXCEPTION_DESC = "Execute Sql Exception";
-	}
+	private String userId;
+	private String userName;
+	private String type;
+	private String phone;
+	private String lastUpdateTime;
 }

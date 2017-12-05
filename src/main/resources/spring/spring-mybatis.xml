@@ -45,13 +45,13 @@
 	<!-- spring整合myBatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="typeAliasesPackage" value="com.ice.entity"></property>
+		<property name="typeAliasesPackage" value="com.ice.sms.entity"></property>
 		<property name="mapperLocations" value="classpath:sqlmap/*.xml" />
 	</bean>
 
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.ice.dao" />
+		<property name="basePackage" value="com.ice.sms.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 
