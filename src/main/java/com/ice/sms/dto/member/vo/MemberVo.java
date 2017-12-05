@@ -15,6 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -29,5 +30,12 @@ import java.io.Serializable;
 @ToString
 public class MemberVo implements Serializable
 {
-
+	private String memberId;
+	private String memberName;
+	private String address;
+	private String phone;
+	private String idCard;
+	private BigDecimal balance;
+	private String createTime;
+	private String lastUpdateTime;
 }

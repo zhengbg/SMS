@@ -30,7 +30,7 @@ import java.math.BigDecimal;
 @ToString
 public class MemberDo implements Serializable
 {
-	private Integer memberId;
+	private String memberId;
 	private String memberName;
 	private String address;
 	private String phone;
