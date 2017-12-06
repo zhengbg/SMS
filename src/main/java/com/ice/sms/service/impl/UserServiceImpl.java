@@ -110,7 +110,6 @@ public class UserServiceImpl implements UserService
 		{
 			params.put ("size", req.getPageSize ());
 		}
-
 		List<UserDo> userDoList = null;
 		int total;
 		try

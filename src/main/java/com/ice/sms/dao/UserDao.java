@@ -26,11 +26,18 @@ import java.util.Map;
 public interface UserDao
 {
 	/**
-	 * 根据用户帐号查询
+	 * 根据用户帐号查询 不包括管理员
 	 * @param userId
 	 * @return
 	 */
 	UserDo queryUserById (String userId);
+
+	/**
+	 * 根据用户帐号查询 包括管理员
+	 * @param userId
+	 * @return
+	 */
+	UserDo queryUserByIdIncludeAdmin(String userId);
 
 	/**
 	 * 新增用户信息

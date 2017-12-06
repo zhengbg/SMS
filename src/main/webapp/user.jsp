@@ -49,11 +49,15 @@
         <div class="am-offcanvas-bar admin-offcanvas-bar">
             <ul class="am-list admin-sidebar-list">
                 <li class="admin-parent">
-                    <a class="am-cf" data-am-collapse="{target: '#security-nav'}"><span class="am-icon-file"></span> 安全管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                    <a class="am-cf" data-am-collapse="{target: '#security-nav'}"><span class="am-icon-users am-icon-fw"></span> 用户管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                     <ul class="am-list am-collapse admin-sidebar-sub am-in" id="security-nav">
-                        <li><a href="user.jsp" class="am-cf"><span class="am-icon-check"></span> 用户管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+                        <li><a href="user.jsp" class="am-cf"><span class="am-icon-male am-icon-fw"></span> 员工管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+                        <li><a href="#" class="am-cf"><span class="am-icon-flag am-icon-fw"></span> 会员管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
                     </ul>
                 </li>
+                <li><a href="#"><span class="am-icon-building am-icon-fw"></span>商品管理</a></li>
+                <li><a href="#"><span class="am-icon-shopping-basket am-icon-fw"></span>采购管理</a></li>
+                <li><a href="#"><span class="am-icon-sellsy am-icon-fw"></span>销售管理</a></li>
             </ul>
 
             <div class="am-panel am-panel-default admin-sidebar-panel">
@@ -71,7 +75,7 @@
     <div class="admin-content">
         <div class="admin-content-body">
             <div class="am-cf am-padding am-padding-bottom-0">
-                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">用户</strong> / <small>Table</small></div>
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">用户管理</strong> >><small>员工管理</small></div>
             </div>
 
             <hr>

@@ -54,11 +54,18 @@
             #{userId}
         </foreach>
     </delete>
-    <!--根据用户ID 查询用户-->
+    <!--包括管理员，根据用户ID 查询用户-->
+    <select id="queryUserByIdIncludeAdmin" resultMap="userMap" parameterType="java.lang.String">
+        SELECT t.u_id,t.u_name,t.u_password,t.u_type,t.u_phone,t.locked,t.salt,t.u_create_time,t.u_last_update_time
+        FROM t_user t
+        WHERE t.u_id = #{userId}
+    </select>
+    <!--不包括管理员不，根据用户ID 查询用户-->
     <select id="queryUserById" resultMap="userMap" parameterType="java.lang.String">
         SELECT t.u_id,t.u_name,t.u_password,t.u_type,t.u_phone,t.locked,t.salt,t.u_create_time,t.u_last_update_time
         FROM t_user t
         WHERE t.u_id = #{userId}
+        AND u_type != 0
     </select>
     <!--查询用户列表-->
     <select id="queryUserList" resultMap="userMap" parameterType="java.util.Map">
@@ -77,6 +84,7 @@
         <if test="type != null">
             AND u_type = #{type}
         </if>
+        AND u_type != 0
         ORDER BY u_create_time ASC
         <if test="start != null and size != null">
             LIMIT #{start}, #{size}

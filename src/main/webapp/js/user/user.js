@@ -13,6 +13,10 @@ $("#batch-delete").on('click',function () {
     $('input[name="userCheckBox"]:checked').each(function(){
         arr.push($(this).val());
     });
+    if(arr.length < 1){
+        alert("please chose one at least!");
+        return;
+    }
     var data ={
         "userIdList":arr
     }
