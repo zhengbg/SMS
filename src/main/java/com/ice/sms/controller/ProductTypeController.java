@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since [产品/模块版本]
  */
 @RestController
-@RequestMapping ("/member")
+@RequestMapping ("/productType")
 public class ProductTypeController
 {
 	private static final Logger LOGGER = LogManager.getLogger (ProductTypeController.class);
