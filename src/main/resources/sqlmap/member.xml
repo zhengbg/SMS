@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ice.sms.dao.MemberDao">
+
+    <!-- 会员结果集 -->
+    <resultMap type="MemberDo" id="MemberMap">
+        <id column="m_id" property="memberId"/>
+        <result column="m_name" property="memberName"/>
+        <result column="m_address" property="address"/>
+        <result column="m_phone" property="phone"/>
+        <result column="m_idcard" property="idCard"/>
+        <result column="m_balance" property="balance"/>
+        <result column="m_create_time" property="createTime"/>
+        <result column="m_last_update_time" property="lastUpdateTime"/>
+    </resultMap>
+
+    <!-- 新增会员 -->
+    <insert id="addMember" parameterType="MemberDo">
+        INSERT INTO t_member
+        (m_id,m_name,m_address,m_phone,m_idcard,m_balance,m_create_time,m_last_update_time)
+        VALUES
+        (#{memberId},#{memberName},#{address},#{phone},#{idCard},#{balance},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+    </insert>
+
+    <!-- 修改会员 -->
+    <update id="updateMember" parameterType="Map">
+        UPDATE t_member
+        <set>
+            <if test="memberName != null">
+                m_name = #{memberName},
+            </if>
+            <if test="address != null">
+                m_address = #{address},
+            </if>
+            <if test="phone != null">
+                m_phone = #{phone},
+            </if>
+            <if test="balance != null">
+                m_balance = #{balance},
+            </if>
+            m_last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+        </set>
+        WHERE m_id = #{memberId} AND m_last_update_time = #{lastUpdateTime}
+    </update>
+
+    <!-- 批量删除会员 -->
+    <delete id="delMember" parameterType="List">
+        DELETE FROM t_member WHERE m_id IN
+        <foreach collection="list" item="memberId" index="index" open="(" separator="," close=")">
+            #{memberId}
+        </foreach>
+    </delete>
+
+    <!-- 根据参数查询会员信息 -->
+    <select id="queryMember" parameterType="Map" resultMap="MemberMap">
+        SELECT * FROM t_member
+        WHERE 1=1
+        <if test="memberName != NULL">
+            AND m_name LIKE concat('%',#{memberName},'%')
+        </if>
+        <if test="address != NULL">
+            AND m_address LIKE concat('%',#{address},'%')
+        </if>
+        <if test="phone != NULL">
+            AND m_phone = #{phone}
+        </if>
+        <if test="idCard != NULL">
+            AND m_idcard = #{idCard}
+        </if>
+        <if test="createTime != NULL">
+            AND m_create_time = #{createTime}
+        </if>
+        <if test="lastUpdateTime != NULL">
+            AND m_last_update_time = #{lastUpdateTime}
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND m_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND m_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="minLastUpdateTime != NULL">
+            <![CDATA[ AND m_last_update_time >= #{minLastUpdateTime} ]]>
+        </if>
+        <if test="maxLastUpdateTime != NULL">
+            <![CDATA[ AND m_last_update_time <= #{maxLastUpdateTime} ]]>
+        </if>
+        <if test="start != NULL and psize != NULL ">
+            limit ${start}, ${psize}
+        </if>
+    </select>
+
+    <!-- 根据参数查询会员信息总数 -->
+    <select id="countMember" parameterType="Map" resultType="int">
+        SELECT COUNT(1) FROM t_member
+        WHERE 1=1
+        <if test="memberName != NULL">
+            AND m_name LIKE concat('%',#{memberName},'%')
+        </if>
+        <if test="address != NULL">
+            AND m_address LIKE concat('%',#{address},'%')
+        </if>
+        <if test="phone != NULL">
+            AND m_phone = #{phone}
+        </if>
+        <if test="idCard != NULL">
+            AND m_idcard = #{idCard}
+        </if>
+        <if test="createTime != NULL">
+            AND m_create_time = #{createTime}
+        </if>
+        <if test="lastUpdateTime != NULL">
+            AND m_last_update_time = #{lastUpdateTime}
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND m_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND m_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="minLastUpdateTime != NULL">
+            <![CDATA[ AND m_last_update_time >= #{minLastUpdateTime} ]]>
+        </if>
+        <if test="maxLastUpdateTime != NULL">
+            <![CDATA[ AND m_last_update_time <= #{maxLastUpdateTime} ]]>
+        </if>
+    </select>
+
+    <!-- 根据id查询会员信息 -->
+    <select id="queryMemberById" parameterType="String" resultMap="MemberMap">
+        SELECT * FROM t_member WHERE m_id = #{memberId}
+    </select>
+</mapper>
