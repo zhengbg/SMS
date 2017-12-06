@@ -28,13 +28,31 @@ public interface Constant
 
 		//执行sql异常
 		String SQL_EXCEPTION_CODE = "200001";
-		String SQL_EXCEPTION_DESC = "Execute Sql Exception";
+		String SQL_EXCEPTION_DESC = "Execute Sql Exception!";
 
 		String UNKNOWN_ERROR_CODE = "999999";
 		String UNKNOWN_ERROR_DESC = "System inner error!";
 
 		//参数缺失
-		String MISSING_PARAMETERS_CODE = "100001";
+		String MISSING_PARAMETERS_CODE = "200002";
 		String MISSING_PARAMETERS_DESC = "Short of param:";
+	}
+
+	interface User
+	{
+		/*用户帐号不存在*/
+		String USER_NOT_EXIST = "300001";
+		String USER_NOT_EXIST_DESC = "User is not exist!";
+
+		/*密码错误*/
+		String PASSWORD_ERROR = "300002";
+		String PASSWORD_ERROR_DESC = "Password error!";
+
+		/*帐号被锁定*/
+		String USER_IN_LOCK = "300003";
+		String USER_IN_LOCK_DESC = " User is locked!";
+
+		String USER_IN_LOGIN = "300004";
+		String USER_IN_LOGIN_DESC = "User has login!";
 	}
 }

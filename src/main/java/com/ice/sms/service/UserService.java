@@ -12,6 +12,7 @@ package com.ice.sms.service;
 
 import com.ice.sms.common.base.ResultInfo;
 import com.ice.sms.dto.user.request.BatchDelUserReq;
+import com.ice.sms.dto.user.request.CountUserResp;
 import com.ice.sms.dto.user.request.QueryByIdReq;
 import com.ice.sms.dto.user.request.QueryUserListReq;
 import com.ice.sms.dto.user.response.QueryByIdResp;
@@ -37,4 +38,6 @@ public interface UserService
 	ResultInfo updateUser (UserVo userVo);
 
 	ResultInfo addUser (UserVo userVo);
+
+	CountUserResp countUser (QueryByIdReq req);
 }

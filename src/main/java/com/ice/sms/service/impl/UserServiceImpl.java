@@ -15,6 +15,7 @@ import com.ice.sms.common.constant.Constant;
 import com.ice.sms.common.exception.SMSException;
 import com.ice.sms.dao.UserDao;
 import com.ice.sms.dto.user.request.BatchDelUserReq;
+import com.ice.sms.dto.user.request.CountUserResp;
 import com.ice.sms.dto.user.request.QueryByIdReq;
 import com.ice.sms.dto.user.request.QueryUserListReq;
 import com.ice.sms.dto.user.response.QueryByIdResp;
@@ -217,6 +218,28 @@ public class UserServiceImpl implements UserService
 			throw new SMSException (Constant.Common.SQL_EXCEPTION_CODE, Constant.Common.SQL_EXCEPTION_DESC);
 		}
 		LOGGER.debug (String.format ("SMS.UserServiceImpl.updateUser.resp:%s", resp));
+		return resp;
+	}
+
+	@Override
+	public CountUserResp countUser (QueryByIdReq req)
+	{
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.countUser.request:%s", req));
+		CountUserResp resp = new CountUserResp ();
+		Map<String,Object> params = new HashMap<> (1);
+		params.put ("userId",req.getUserId ());
+		int count;
+		try
+		{
+			count = userDao.count (params);
+		}
+		catch (Exception e)
+		{
+			LOGGER.error ("SMS.UserServiceImpl.countUser.Exception", e);
+			throw new SMSException (Constant.Common.SQL_EXCEPTION_CODE, Constant.Common.SQL_EXCEPTION_DESC);
+		}
+		resp.setCount (count);
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.countUser.resp:%s", resp));
 		return resp;
 	}
 }

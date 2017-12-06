@@ -94,4 +94,5 @@
             AND u_type = #{type}
         </if>
     </select>
+
 </mapper>
