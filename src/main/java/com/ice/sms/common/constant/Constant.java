@@ -30,7 +30,10 @@ public interface Constant
 		String SQL_EXCEPTION_CODE = "200001";
 		String SQL_EXCEPTION_DESC = "Execute Sql Exception";
 
-		String UNKNOWN_ERROR_CODE ="999999";
+		String UNKNOWN_ERROR_CODE = "999999";
 		String UNKNOWN_ERROR_DESC = "System inner error!";
+
+		//参数缺失
+		String MISSING_PARAMETERS_CODE = "100001";
 	}
 }
