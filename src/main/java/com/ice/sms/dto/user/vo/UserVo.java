@@ -32,6 +32,7 @@ public class UserVo implements Serializable
 	private String userId;
 	private String userName;
 	private String type;
+	private String locked;
 	private String phone;
 	private String lastUpdateTime;
 }

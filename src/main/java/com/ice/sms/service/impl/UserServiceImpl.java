@@ -12,6 +12,7 @@ package com.ice.sms.service.impl;
 
 import com.ice.sms.common.base.ResultInfo;
 import com.ice.sms.common.constant.Constant;
+import com.ice.sms.common.exception.SMSException;
 import com.ice.sms.dao.UserDao;
 import com.ice.sms.dto.user.request.BatchDelUserReq;
 import com.ice.sms.dto.user.request.QueryByIdReq;
@@ -20,11 +21,19 @@ import com.ice.sms.dto.user.response.QueryByIdResp;
 import com.ice.sms.dto.user.response.QueryUserListResp;
 import com.ice.sms.dto.user.vo.UserVo;
 import com.ice.sms.entity.UserDo;
+import com.ice.sms.security.PasswordHelper;
 import com.ice.sms.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -54,15 +63,14 @@ public class UserServiceImpl implements UserService
 		catch (Exception e)
 		{
 			LOGGER.error ("SMS.UserServiceImpl.queryUserById.Exception", e);
-			resp.setResultCode (Constant.Common.SQL_EXCEPTION_CODE);
-			resp.setResultDesc (Constant.Common.SQL_EXCEPTION_DESC);
-			return resp;
+			throw new SMSException (Constant.Common.SQL_EXCEPTION_CODE, Constant.Common.SQL_EXCEPTION_DESC);
 		}
 
 		UserVo userVo = new UserVo ();
 		userVo.setUserId (userDo.getUserId ());
 		userVo.setUserName (userDo.getUserName ());
 		userVo.setType (userDo.getType ());
+		userVo.setLocked (userDo.getLocked ());
 		userVo.setPhone (userDo.getPhone ());
 		userVo.setLastUpdateTime (userDo.getLastUpdateTime ());
 		resp.setUserVo (userVo);
@@ -74,24 +82,141 @@ public class UserServiceImpl implements UserService
 	@Override
 	public QueryUserListResp queryUserList (QueryUserListReq req)
 	{
-		return null;
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.queryUserList.request:%s", req));
+		QueryUserListResp resp = new QueryUserListResp ();
+		Map<String, Object> params = new HashMap<> ();
+		if (! StringUtils.isEmpty (req.getUserId ()))
+		{
+			params.put ("userId", req.getUserId ());
+		}
+		if (! StringUtils.isEmpty (req.getUserName ()))
+		{
+			params.put ("userName", req.getUserName ());
+		}
+		if (! StringUtils.isEmpty (req.getType ()))
+		{
+			params.put ("type", req.getUserName ());
+		}
+		if (! StringUtils.isEmpty (req.getPageIndex ()))
+		{
+			params.put ("start", (req.getPageIndex () - 1) / req.getPageSize ());
+		}
+		if (! StringUtils.isEmpty (req.getPageSize ()))
+		{
+			params.put ("size", req.getPageSize ());
+		}
+
+		List<UserDo> userDoList = null;
+		UserVo userVo = null;
+		int total;
+		try
+		{
+			userDoList = userDao.queryUserList (params);
+			total = userDao.count (params);
+		}
+		catch (Exception e)
+		{
+			LOGGER.error ("SMS.UserServiceImpl.queryUserList.Exception", e);
+			throw new SMSException (Constant.Common.SQL_EXCEPTION_CODE, Constant.Common.SQL_EXCEPTION_DESC);
+		}
+		List<UserVo> userVoList = new ArrayList<> (10);
+		if (! CollectionUtils.isEmpty (userDoList))
+		{
+			userVo = new UserVo ();
+			for (UserDo userDo : userDoList)
+			{
+				userVo.setUserId (userDo.getUserId ());
+				userVo.setUserName (userDo.getUserName ());
+				userVo.setType (userDo.getType ());
+				userVo.setLocked (userDo.getLocked ());
+				userVo.setPhone (userDo.getPhone ());
+				userVo.setLastUpdateTime (userDo.getLastUpdateTime ());
+				userVoList.add (userVo);
+			}
+		}
+		resp.setUserVoList (userVoList);
+		resp.setTotal (total);
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.queryUserList.resp:%s", resp));
+		return resp;
 	}
 
 	@Override
 	public ResultInfo batchDelUser (BatchDelUserReq req)
 	{
-		return null;
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.batchDelUser.request:%s", req));
+		ResultInfo resp = new ResultInfo ();
+		try
+		{
+			userDao.batchDeleteUser (req.getUserIdList ());
+		}
+		catch (Exception e)
+		{
+			LOGGER.error ("SMS.UserServiceImpl.batchDelUser.Exception", e);
+			throw new SMSException (Constant.Common.SQL_EXCEPTION_CODE, Constant.Common.SQL_EXCEPTION_DESC);
+		}
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.batchDelUser.resp:%s", resp));
+		return resp;
 	}
 
 	@Override
 	public ResultInfo updateUser (UserVo userVo)
 	{
-		return null;
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.updateUser.request:%s", userVo));
+		ResultInfo resp = new ResultInfo ();
+		UserDo userDo = new UserDo ();
+		userDo.setUserId (userVo.getUserId ());
+		userDo.setUserName (userVo.getUserName ());
+		userDo.setPassword (userVo.getLastUpdateTime ());
+		userDo.setPhone (userVo.getPhone ());
+		userDo.setType (userVo.getType ());
+		userDo.setLastUpdateTime (userVo.getLastUpdateTime ());
+		/*密码不为空，则为修改密码，需要对密码再次加密*/
+		if (! StringUtils.isEmpty (userDo.getPassword ()))
+		{
+			new PasswordHelper ().encryptPassword (userDo);
+		}
+		try
+		{
+			userDao.updateUser (userDo);
+		}
+		catch (Exception e)
+		{
+			LOGGER.error ("SMS.UserServiceImpl.updateUser.Exception", e);
+			throw new SMSException (Constant.Common.SQL_EXCEPTION_CODE, Constant.Common.SQL_EXCEPTION_DESC);
+		}
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.updateUser.resp:%s", resp));
+		return resp;
 	}
 
 	@Override
 	public ResultInfo addUser (UserVo userVo)
 	{
-		return null;
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.addUser.request:%s", userVo));
+		ResultInfo resp = new ResultInfo ();
+		UserDo userDo = new UserDo ();
+		userDo.setUserId (userVo.getUserId ());
+		userDo.setUserName (userVo.getUserName ());
+		userDo.setPassword (userVo.getLastUpdateTime ());
+		userDo.setPhone (userVo.getPhone ());
+		/*默认状态正常*/
+		userDo.setType ("0");
+		/*如果没有设置用户密码，默认初始化密码为123456*/
+		if(StringUtils.isEmpty (userDo.getPassword ()))
+		{
+			userDo.setPhone ("123456");
+		}
+		//设置盐值，加密
+		new PasswordHelper ().encryptPassword (userDo);
+		try
+		{
+			userDao.addUser (userDo);
+		}
+		catch (Exception e)
+		{
+			LOGGER.error ("SMS.UserServiceImpl.addUser.Exception", e);
+			throw new SMSException (Constant.Common.SQL_EXCEPTION_CODE, Constant.Common.SQL_EXCEPTION_DESC);
+		}
+		LOGGER.debug (String.format ("SMS.UserServiceImpl.updateUser.resp:%s", resp));
+		return resp;
 	}
 }

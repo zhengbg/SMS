@@ -35,5 +35,6 @@ public interface Constant
 
 		//参数缺失
 		String MISSING_PARAMETERS_CODE = "100001";
+		String MISSING_PARAMETERS_DESC = "Short of param:";
 	}
 }
