@@ -28,11 +28,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class HandlerException
 {
 	@ExceptionHandler
-	public ResultInfo toResponse(Exception e)
+	public ResultInfo toResponse (Exception e)
 	{
-			ResultInfo resultInfo = new ResultInfo ();
+		ResultInfo resultInfo = new ResultInfo ();
 
-		if(e instanceof SMSException)
+		if (e instanceof SMSException)
 		{
 			resultInfo.setResultCode (((SMSException) e).getResultCode ());
 
@@ -41,7 +41,7 @@ public class HandlerException
 		else
 		{
 			resultInfo.setResultCode ("999999");
-			resultInfo.setResultDesc ("Unknown Exception");
+			resultInfo.setResultDesc (e.getClass ().getName ());
 		}
 		return resultInfo;
 	}
