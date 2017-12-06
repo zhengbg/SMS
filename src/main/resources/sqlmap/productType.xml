@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ice.sms.dao.ProductTypeDao">
+    <!-- 商品类型结果集 -->
+    <resultMap type="ProductTypeDo" id="ProductTypeMap">
+        <id column="pt_id" property="productTypeId"/>
+        <result column="pt_name" property="productTypeName"/>
+        <result column="pt_memo" property="memo"/>
+        <result column="pt_create_time" property="createTime"/>
+        <result column="pt_last_update_time" property="lastUpdateTime"/>
+    </resultMap>
+
+    <!-- 增加商品类型 -->
+    <insert id="addProductType" parameterType="ProductTypeDo">
+         INSERT INTO t_product_type
+        (pt_name,pt_memo,pt_create_time,pt_last_update_time)
+        VALUES
+        (#{productTypeName},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+    </insert>
+
+    <!-- 批量删除商品类型 -->
+    <delete id="delProductType" parameterType="List">
+        DELETE FROM t_product_type WHERE pt_id IN
+        <foreach collection="list" item="productTypeId" index="index" open="(" separator="," close=")">
+            #{productTypeId}
+        </foreach>
+    </delete>
+
+    <!-- 修改商品类型信息  -->
+    <update id="updateProductType" parameterType="Map">
+        UPDATE t_product_type
+        <set>
+            <if test="productTypeName != null">
+                pt_name = #{productTypeName},
+            </if>
+            <if test="memo != null">
+                pt_memo = #{memo},
+            </if>
+            pt_last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+        </set>
+        WHERE pt_id = #{productTypeId} AND pt_last_update_time = #{lastUpdateTime}
+    </update>
+
+    <!-- 查询商品类型 -->
+    <select id="queryProductType" parameterType="Map" resultMap="ProductTypeMap">
+        SELECT * FROM t_product_type
+        WHERE 1=1
+        <if test="productTypeName != NULL">
+            AND pt_name LIKE concat('%',#{productTypeName},'%')
+        </if>
+        <if test="createTime != NULL">
+            AND pt_create_time = #{createTime}
+        </if>
+        <if test="lastUpdateTime != NULL">
+            AND pt_last_update_time = #{lastUpdateTime}
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND pt_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND pt_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="minLastUpdateTime != NULL">
+            <![CDATA[ AND pt_last_update_time >= #{minLastUpdateTime} ]]>
+        </if>
+        <if test="maxLastUpdateTime != NULL">
+            <![CDATA[ AND pt_last_update_time <= #{maxLastUpdateTime} ]]>
+        </if>
+        <if test="start != NULL and psize != NULL ">
+            limit ${start}, ${psize}
+        </if>
+    </select>
+
+    <!-- 查询商品类型总数 -->
+    <select id="countProductType" parameterType="Map" resultType="int">
+        SELECT COUNT(1) FROM t_product_type
+        WHERE 1=1
+        <if test="productTypeName != NULL">
+            AND pt_name LIKE concat('%',#{productTypeName},'%')
+        </if>
+        <if test="createTime != NULL">
+            AND pt_create_time = #{createTime}
+        </if>
+        <if test="lastUpdateTime != NULL">
+            AND pt_last_update_time = #{lastUpdateTime}
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND pt_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND pt_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="minLastUpdateTime != NULL">
+            <![CDATA[ AND pt_last_update_time >= #{minLastUpdateTime} ]]>
+        </if>
+        <if test="maxLastUpdateTime != NULL">
+            <![CDATA[ AND pt_last_update_time <= #{maxLastUpdateTime} ]]>
+        </if>
+    </select>
+
+    <!-- 根据id查询商品类型信息 -->
+    <select id="getProductType" parameterType="Integer" resultMap="ProductTypeMap">
+      SELECT * FROM t_product_type WHERE pt_id = #{productTypeId}
+    </select>
+</mapper>

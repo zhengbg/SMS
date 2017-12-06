@@ -85,7 +85,7 @@ public class MemberServiceImpl implements MemberService
 		if (StringUtils.isEmpty (memberVo.getIdCard ()))
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
-			resultInfo.setResultDesc ("ID card can not be null");
+			resultInfo.setResultDesc ("idCard can not be null");
 			return resultInfo;
 		}
 
@@ -134,11 +134,11 @@ public class MemberServiceImpl implements MemberService
 		if (StringUtils.isEmpty (updateMemberRequest.getLastUpdateTime ()))
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
-			resultInfo.setResultDesc ("last update time can not be null");
+			resultInfo.setResultDesc ("lastUpdateTime can not be null");
 			return resultInfo;
 		}
 
-		Map<String, Object> params = new HashMap<String, Object> ();
+		Map<String, Object> params = new HashMap<> ();
 		if (! StringUtils.isEmpty (updateMemberRequest.getMemberName ()))
 		{
 			params.put ("memberName", updateMemberRequest.getMemberName ());
@@ -287,7 +287,7 @@ public class MemberServiceImpl implements MemberService
 
 		if (! CollectionUtils.isEmpty (memberDos))
 		{
-			List<MemberVo> memberVos = new ArrayList<MemberVo> ();
+			List<MemberVo> memberVos = new ArrayList<> ();
 			for (MemberDo memberDo : memberDos)
 			{
 				MemberVo memberVo = change2Vo (memberDo);
