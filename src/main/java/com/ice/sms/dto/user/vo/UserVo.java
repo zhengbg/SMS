@@ -31,6 +31,7 @@ public class UserVo implements Serializable
 {
 	private String userId;
 	private String userName;
+	private String password;
 	private String type;
 	private String locked;
 	private String phone;

@@ -40,7 +40,7 @@
             <if test="locked != null">
                 locked = #{locked},
             </if>
-            last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+            u_last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
         </set>
         WHERE
         u_id = #{userId}
@@ -68,8 +68,11 @@
         <if test="userId != null">
             AND u_id = #{userId}
         </if>
+        <if test="locked != null">
+            AND locked = #{locked}
+        </if>
         <if test="userName != null">
-            AND u_name = #{userName}
+            AND u_name like concat('%',#{userName},'%')
         </if>
         <if test="type != null">
             AND u_type = #{type}
@@ -87,8 +90,11 @@
         <if test="userId != null">
             AND u_id = #{userId}
         </if>
+        <if test="locked != null">
+            AND locked = #{locked}
+        </if>
         <if test="userName != null">
-            AND u_name = #{userName}
+            AND u_name like concat('%',#{userName},'%')
         </if>
         <if test="type != null">
             AND u_type = #{type}

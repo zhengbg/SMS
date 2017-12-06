@@ -28,6 +28,7 @@ import lombok.ToString;
 @ToString
 public class QueryUserListReq extends RequestInfo
 {
+	private String locked;
 	private String userId;
 	private String userName;
 	private String type;

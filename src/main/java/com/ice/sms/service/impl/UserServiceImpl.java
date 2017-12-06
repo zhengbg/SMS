@@ -15,7 +15,7 @@ import com.ice.sms.common.constant.Constant;
 import com.ice.sms.common.exception.SMSException;
 import com.ice.sms.dao.UserDao;
 import com.ice.sms.dto.user.request.BatchDelUserReq;
-import com.ice.sms.dto.user.request.CountUserResp;
+import com.ice.sms.dto.user.response.CountUserResp;
 import com.ice.sms.dto.user.request.QueryByIdReq;
 import com.ice.sms.dto.user.request.QueryUserListReq;
 import com.ice.sms.dto.user.response.QueryByIdResp;
@@ -90,6 +90,10 @@ public class UserServiceImpl implements UserService
 		{
 			params.put ("userId", req.getUserId ());
 		}
+		if (! StringUtils.isEmpty (req.getLocked ()))
+		{
+			params.put ("locked", req.getLocked ());
+		}
 		if (! StringUtils.isEmpty (req.getUserName ()))
 		{
 			params.put ("userName", req.getUserName ());
@@ -108,7 +112,6 @@ public class UserServiceImpl implements UserService
 		}
 
 		List<UserDo> userDoList = null;
-		UserVo userVo = null;
 		int total;
 		try
 		{
@@ -123,9 +126,10 @@ public class UserServiceImpl implements UserService
 		List<UserVo> userVoList = new ArrayList<> (10);
 		if (! CollectionUtils.isEmpty (userDoList))
 		{
-			userVo = new UserVo ();
+			UserVo userVo = null;
 			for (UserDo userDo : userDoList)
 			{
+				userVo = new UserVo ();
 				userVo.setUserId (userDo.getUserId ());
 				userVo.setUserName (userDo.getUserName ());
 				userVo.setType (userDo.getType ());
@@ -167,8 +171,9 @@ public class UserServiceImpl implements UserService
 		UserDo userDo = new UserDo ();
 		userDo.setUserId (userVo.getUserId ());
 		userDo.setUserName (userVo.getUserName ());
-		userDo.setPassword (userVo.getLastUpdateTime ());
+		userDo.setPassword (userVo.getPassword ());
 		userDo.setPhone (userVo.getPhone ());
+		userDo.setLocked (userVo.getLocked ());
 		userDo.setType (userVo.getType ());
 		userDo.setLastUpdateTime (userVo.getLastUpdateTime ());
 		/*密码不为空，则为修改密码，需要对密码再次加密*/
@@ -197,14 +202,15 @@ public class UserServiceImpl implements UserService
 		UserDo userDo = new UserDo ();
 		userDo.setUserId (userVo.getUserId ());
 		userDo.setUserName (userVo.getUserName ());
-		userDo.setPassword (userVo.getLastUpdateTime ());
+		userDo.setPassword (userVo.getPassword ());
 		userDo.setPhone (userVo.getPhone ());
+		userDo.setType (userVo.getType ());
 		/*默认状态正常*/
-		userDo.setType ("0");
+		userDo.setLocked ("0");
 		/*如果没有设置用户密码，默认初始化密码为123456*/
 		if(StringUtils.isEmpty (userDo.getPassword ()))
 		{
-			userDo.setPhone ("123456");
+			userDo.setPassword ("123456");
 		}
 		//设置盐值，加密
 		new PasswordHelper ().encryptPassword (userDo);

@@ -13,6 +13,7 @@ package com.ice.sms.controller;
 import com.ice.sms.common.base.ResultInfo;
 import com.ice.sms.common.constant.Constant;
 import com.ice.sms.dto.user.request.*;
+import com.ice.sms.dto.user.response.CountUserResp;
 import com.ice.sms.dto.user.response.QueryByIdResp;
 import com.ice.sms.dto.user.response.QueryUserListResp;
 import com.ice.sms.dto.user.vo.UserVo;
@@ -52,7 +53,7 @@ public class UserController
 		return userService.queryUserList (req);
 	}
 
-	@RequestMapping(value = "/find",method = RequestMethod.POST)
+	@RequestMapping (value = "/find", method = RequestMethod.POST)
 	public QueryByIdResp queryUserById (@RequestBody QueryByIdReq req)
 	{
 		QueryByIdResp resp = new QueryByIdResp ();
@@ -65,11 +66,12 @@ public class UserController
 		resp = userService.queryUserById (req);
 		return resp;
 	}
-	@RequestMapping(value = "/del",method = RequestMethod.POST)
-	public ResultInfo batchDelUser(@RequestBody BatchDelUserReq req)
+
+	@RequestMapping (value = "/del", method = RequestMethod.POST)
+	public ResultInfo batchDelUser (@RequestBody BatchDelUserReq req)
 	{
 		ResultInfo resp = new ResultInfo ();
-		if(CollectionUtils.isEmpty (req.getUserIdList ()))
+		if (CollectionUtils.isEmpty (req.getUserIdList ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "userIdList");
@@ -78,29 +80,30 @@ public class UserController
 		resp = userService.batchDelUser (req);
 		return resp;
 	}
-	@RequestMapping(value = "/modify",method = RequestMethod.POST)
+
+	@RequestMapping (value = "/modify", method = RequestMethod.POST)
 	public ResultInfo updateUser (@RequestBody UserVo userVo)
 	{
 		ResultInfo resp = new ResultInfo ();
-		if(StringUtils.isEmpty (userVo.getUserId ()))
+		if (StringUtils.isEmpty (userVo.getUserId ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "userId");
 			return resp;
 		}
-		if(StringUtils.isEmpty (userVo.getUserName ()))
+		if (StringUtils.isEmpty (userVo.getUserName ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "userName");
 			return resp;
 		}
-		if(StringUtils.isEmpty (userVo.getLocked ()))
+		if (StringUtils.isEmpty (userVo.getLocked ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "locked");
 			return resp;
 		}
-		if(StringUtils.isEmpty (userVo.getLastUpdateTime ()))
+		if (StringUtils.isEmpty (userVo.getLastUpdateTime ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "lastUpdateTime");
@@ -109,23 +112,24 @@ public class UserController
 		resp = userService.updateUser (userVo);
 		return resp;
 	}
-	@RequestMapping(value = "/add",method = RequestMethod.POST)
+
+	@RequestMapping (value = "/add", method = RequestMethod.POST)
 	public ResultInfo addUser (@RequestBody UserVo userVo)
 	{
 		ResultInfo resp = new ResultInfo ();
-		if(StringUtils.isEmpty (userVo.getUserId ()))
+		if (StringUtils.isEmpty (userVo.getUserId ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "userId");
 			return resp;
 		}
-		if(StringUtils.isEmpty (userVo.getType ()))
+		if (StringUtils.isEmpty (userVo.getType ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "type");
 			return resp;
 		}
-		if(StringUtils.isEmpty (userVo.getUserName ()))
+		if (StringUtils.isEmpty (userVo.getUserName ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "userName");
@@ -135,11 +139,11 @@ public class UserController
 		return resp;
 	}
 
-	@RequestMapping(value = "/count",method = RequestMethod.POST)
+	@RequestMapping (value = "/count", method = RequestMethod.POST)
 	public CountUserResp countUser (@RequestBody QueryByIdReq req)
 	{
 		CountUserResp resp = new CountUserResp ();
-		if(StringUtils.isEmpty (req.getUserId ()))
+		if (StringUtils.isEmpty (req.getUserId ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "userId");
@@ -160,20 +164,26 @@ public class UserController
 		if (StringUtils.isEmpty (loginReq.getAccount ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
-			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC +"userId");
+			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "userId");
 			return resp;
 		}
 		if (StringUtils.isEmpty (loginReq.getPassword ()))
 		{
 			resp.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
-			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC +"password");
+			resp.setResultDesc (Constant.Common.MISSING_PARAMETERS_DESC + "password");
 			return resp;
 		}
-
 		Subject subject = SecurityUtils.getSubject ();
 
+		if (subject.isAuthenticated () && loginReq.getAccount ().equals (subject.getPrincipal ()))
+		{
+			/*用户已经登录*/
+			resp.setResultCode (Constant.User.USER_IN_LOGIN);
+			resp.setResultDesc (Constant.User.USER_IN_LOGIN_DESC);
+			return resp;
+		}
 		/*用户未登录*/
-		if (! subject.isAuthenticated ())
+		else
 		{
 			/*用户名、密码存入token*/
 			UsernamePasswordToken token = new UsernamePasswordToken (loginReq.getAccount (), loginReq.getPassword ());
@@ -223,13 +233,7 @@ public class UserController
 				return resp;
 			}
 		}
-		/*用户已经登录*/
-		else
-		{
-			resp.setResultCode (Constant.User.USER_IN_LOGIN);
-			resp.setResultDesc (Constant.User.USER_IN_LOGIN_DESC);
-			return resp;
-		}
+
 		return resp;
 	}
 }

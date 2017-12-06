@@ -38,7 +38,7 @@ public class MyRealm extends AuthorizingRealm
 		UserDo user = null;
 		try
 		{
-			userDao.queryUserById (userId);
+			user = userDao.queryUserById (userId);
 		}
 		catch (Exception e)
 		{

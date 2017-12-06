@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/11/21.
  */
-var pageSize = 3;
+var pageSize = 10;
 var ajaxUtil =
 {
     doPostAjax: function (url, data, callSuccess, callError) {
@@ -81,7 +81,7 @@ function pagination(total,nowPage) {
         totalSize: total,
         callback: function(num) {
             pageIndex = num;
-            queryAll(pageIndex);
+            query(pageIndex);
         }
     })
 }

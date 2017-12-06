@@ -8,7 +8,7 @@
  * 修改单号:  <修改单号>
  * 修改内容:  <修改内容>
  */
-package com.ice.sms.dto.user.request;
+package com.ice.sms.dto.user.response;
 
 import com.ice.sms.common.base.ResultInfo;
 import lombok.Getter;

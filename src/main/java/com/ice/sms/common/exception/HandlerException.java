@@ -30,7 +30,7 @@ public class HandlerException
 	@ExceptionHandler
 	public ResultInfo toResponse(Exception e)
 	{
-		ResultInfo resultInfo = new ResultInfo ();
+			ResultInfo resultInfo = new ResultInfo ();
 
 		if(e instanceof SMSException)
 		{

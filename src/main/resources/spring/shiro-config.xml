@@ -28,6 +28,7 @@
     <!-- 注册自定义的Realm，并把密码匹配器注入，使用注解的方式自动注解会无法正确匹配密码 -->
     <bean id="myRealm" class="com.ice.sms.security.MyRealm">
         <property name="credentialsMatcher" ref="credentialsMatcher"></property>
+        <property name="cacheManager" ref="cacheManager"></property>
     </bean> 
 
     <!-- 安全管理器 -->
@@ -52,7 +53,7 @@
         <!-- 配置我们的登录请求地址 -->
         <property name="loginUrl" value="/login.jsp"/>
         <!-- 配置我们在登录页登录成功后的跳转地址，如果你访问的是非/login地址，则跳到您访问的地址 -->
-        <property name="successUrl" value="/index.jsp"/>
+        <property name="successUrl" value="/user.jsp"/>
         <!-- 如果您请求的资源不再您的权限范围，则跳转到/403请求地址 -->	
         <!-- <property name="unauthorizedUrl" value="/unauthorized"/> -->
         <property name="filters">
@@ -63,7 +64,14 @@
         <!-- 权限配置 -->
         <property name="filterChainDefinitions">
             <value>
-               /**=authc
+                /user/login=anon
+                /logout=logout
+                /js/**=anon
+                /css/**=anon
+                /img/**=anon
+                /i/**=anon
+                /fonts/**=anon
+                /**=authc
             </value>
         </property>
     </bean>
