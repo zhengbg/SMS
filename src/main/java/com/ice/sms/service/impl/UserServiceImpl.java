@@ -209,7 +209,7 @@ public class UserServiceImpl implements UserService
 		/*如果没有设置用户密码，默认初始化密码为123456*/
 		if(StringUtils.isEmpty (userDo.getPassword ()))
 		{
-			userDo.setPassword ("123456");
+			userDo.setPassword (Constant.User.INIT_PASSWORD);
 		}
 		//设置盐值，加密
 		new PasswordHelper ().encryptPassword (userDo);

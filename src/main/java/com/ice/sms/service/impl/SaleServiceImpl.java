@@ -11,12 +11,15 @@
 package com.ice.sms.service.impl;
 
 import com.ice.sms.common.base.ResultInfo;
+import com.ice.sms.common.constant.Constant;
+import com.ice.sms.common.exception.SMSException;
 import com.ice.sms.dao.SaleDao;
 import com.ice.sms.dto.sale.request.BatchDelSaleReq;
 import com.ice.sms.dto.sale.request.QuerySaleByIdReq;
 import com.ice.sms.dto.sale.request.QuerySaleReq;
 import com.ice.sms.dto.sale.response.QuerySaleByIdResp;
 import com.ice.sms.dto.sale.response.QuerySaleResp;
+import com.ice.sms.dto.sale.vo.SaleVo;
 import com.ice.sms.entity.SaleDo;
 import com.ice.sms.service.SaleService;
 import org.apache.logging.log4j.LogManager;
@@ -52,19 +55,25 @@ public class SaleServiceImpl implements SaleService
 	}
 
 	@Override
-	public ResultInfo addSale (SaleDo saleDo)
+	public ResultInfo addSale (SaleVo saleVo)
 	{
-		LOGGER.debug (String.format ("SMS.SaleServiceImpl.addSale.request:%s", saleDo));
+		LOGGER.debug (String.format ("SMS.SaleServiceImpl.addSale.request:%s", saleVo));
 		ResultInfo resp = new ResultInfo ();
-
+		SaleDo saleDo = new SaleDo ();
+		saleDo.setUserId (saleVo.getUserId ());
+		saleDo.setProductId (saleVo.getProductId ());
+		saleDo.setMemberId (saleVo.getMemberId ());
+		saleDo.setPrice (saleVo.getPrice ());
+		saleDo.setAmount (saleVo.getAmount ());
+		saleDo.setMemo (saleVo.getMemo ());
 
 		return resp;
 	}
 
 	@Override
-	public ResultInfo updateSale (SaleDo saleDo)
+	public ResultInfo updateSale (SaleVo saleVo)
 	{
-		LOGGER.debug (String.format ("SMS.SaleServiceImpl.updateSale.request:%s", saleDo));
+		LOGGER.debug (String.format ("SMS.SaleServiceImpl.updateSale.request:%s", saleVo));
 		ResultInfo resp = new ResultInfo ();
 
 		return resp;
@@ -75,7 +84,16 @@ public class SaleServiceImpl implements SaleService
 	{
 		LOGGER.debug (String.format ("SMS.SaleServiceImpl.batchDelSale.request:%s", req));
 		ResultInfo resp = new ResultInfo ();
-
+		try
+		{
+			saleDao.batchDelSaleRecord (req.getSaleIdList ());
+		}
+		catch (Exception e)
+		{
+			LOGGER.error ("SMS.SaleServiceImpl.batchDelUser.Exception", e);
+			throw new SMSException (Constant.Common.SQL_EXCEPTION_CODE, Constant.Common.SQL_EXCEPTION_DESC);
+		}
+		LOGGER.debug (String.format ("SMS.SaleServiceImpl.batchDelSale.response:%s", req));
 		return resp;
 	}
 }

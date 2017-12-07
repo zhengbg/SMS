@@ -16,7 +16,7 @@ import com.ice.sms.dto.sale.request.QuerySaleByIdReq;
 import com.ice.sms.dto.sale.request.QuerySaleReq;
 import com.ice.sms.dto.sale.response.QuerySaleByIdResp;
 import com.ice.sms.dto.sale.response.QuerySaleResp;
-import com.ice.sms.entity.SaleDo;
+import com.ice.sms.dto.sale.vo.SaleVo;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -32,9 +32,9 @@ public interface SaleService
 
 	QuerySaleByIdResp querySaleRecordById (QuerySaleByIdReq req);
 
-	ResultInfo addSale (SaleDo saleDo);
+	ResultInfo addSale (SaleVo saleVo);
 
-	ResultInfo updateSale (SaleDo saleDo);
+	ResultInfo updateSale (SaleVo saleVo);
 
 	ResultInfo batchDelSale (BatchDelSaleReq req);
 }

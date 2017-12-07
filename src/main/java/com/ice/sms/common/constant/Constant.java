@@ -52,7 +52,11 @@ public interface Constant
 		String USER_IN_LOCK = "300003";
 		String USER_IN_LOCK_DESC = " User is locked!";
 
+		/*用户已经登录*/
 		String USER_IN_LOGIN = "300004";
 		String USER_IN_LOGIN_DESC = "User has login!";
+
+		/*初始化密码*/
+		String INIT_PASSWORD = "123456";
 	}
 }
