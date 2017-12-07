@@ -1,5 +1,5 @@
 /**
- * 文 件 名:  QueryProductRequest
+ * 文 件 名:  QueryPurchaseRequest
  * 版    权:  Quanten Teams. Copyright YYYY-YYYY,  All rights reserved
  * 描    述:  <描述>
  * 修 改 人:  zhengbinggui
@@ -8,7 +8,7 @@
  * 修改单号:  <修改单号>
  * 修改内容:  <修改内容>
  */
-package com.ice.sms.dto.product.request;
+package com.ice.sms.dto.purchase.request;
 
 import com.ice.sms.common.base.RequestInfo;
 import lombok.Getter;
@@ -26,20 +26,17 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class QueryProductRequest extends RequestInfo
+public class QueryPurchaseRequest extends RequestInfo
 {
-	private String productId;
 	private String productName;
 	private String supplier;
 	private Integer productTypeId;
 	private String productTypeName;
-	private Integer stock;
+	private String productId;
+	private String employeeId;
+	private String employeeName;
 	private String createTime;
-	private String lastUpdateTime;
-	private Integer minStock;
-	private Integer maxStock;
 	private String minCreateTime;
 	private String maxCreateTime;
-	private String minLastUpdateTime;
-	private String maxLastUpdateTime;
+	private Integer purchaseId;
 }

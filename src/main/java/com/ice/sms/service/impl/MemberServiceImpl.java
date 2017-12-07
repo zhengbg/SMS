@@ -229,6 +229,10 @@ public class MemberServiceImpl implements MemberService
 
 		Map<String, Object> params = new HashMap<String, Object> ();
 
+		if (! StringUtils.isEmpty (queryMemberRequest.getMemberId ()))
+		{
+			params.put ("memberId", queryMemberRequest.getMemberId ());
+		}
 		if (! StringUtils.isEmpty (queryMemberRequest.getMemberName ()))
 		{
 			params.put ("memberName", queryMemberRequest.getMemberName ());

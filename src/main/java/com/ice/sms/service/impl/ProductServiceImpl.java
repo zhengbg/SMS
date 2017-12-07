@@ -251,6 +251,10 @@ public class ProductServiceImpl implements ProductService
 		}
 
 		Map<String, Object> params = new HashMap<> ();
+		if (! StringUtils.isEmpty (queryProductRequest.getProductId ()))
+		{
+			params.put ("productId", queryProductRequest.getProductId ());
+		}
 		if (! StringUtils.isEmpty (queryProductRequest.getProductName ()))
 		{
 			params.put ("productName", queryProductRequest.getProductName ());

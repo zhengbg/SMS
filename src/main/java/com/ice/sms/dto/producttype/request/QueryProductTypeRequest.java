@@ -28,6 +28,7 @@ import lombok.ToString;
 @ToString
 public class QueryProductTypeRequest extends RequestInfo
 {
+	private Integer productTypeId;
 	private String productTypeName;
 	private String createTime;
 	private String lastUpdateTime;

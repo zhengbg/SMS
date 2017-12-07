@@ -47,6 +47,9 @@
     <select id="queryProductType" parameterType="Map" resultMap="ProductTypeMap">
         SELECT * FROM t_product_type
         WHERE 1=1
+        <if test="productTypeId != NULL">
+            AND pt_id = #{productTypeId}
+        </if>
         <if test="productTypeName != NULL">
             AND pt_name LIKE concat('%',#{productTypeName},'%')
         </if>
@@ -77,6 +80,9 @@
     <select id="countProductType" parameterType="Map" resultType="int">
         SELECT COUNT(1) FROM t_product_type
         WHERE 1=1
+        <if test="productTypeId != NULL">
+            AND pt_id = #{productTypeId}
+        </if>
         <if test="productTypeName != NULL">
             AND pt_name LIKE concat('%',#{productTypeName},'%')
         </if>

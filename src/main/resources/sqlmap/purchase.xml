@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ice.sms.dao.PurchaseDao">
+    <!-- 采购记录结果集 -->
+    <resultMap type="PurchaseDo" id="PurchaseMap">
+        <id column="pr_id" property="purchaseId"/>
+        <result column="p_id" property="productId"/>
+        <result column="u_id" property="employeeId"/>
+        <result column="pr_price" property="price"/>
+        <result column="pr_amount" property="amount"/>
+        <result column="pr_memo" property="memo"/>
+        <result column="pr_create_time" property="createTime"/>
+        <result column="p_name" property="productName"/>
+        <result column="p_supplier" property="supplier"/>
+        <result column="u_name" property="employeeName"/>
+        <result column="pt_id" property="productTypeId"/>
+        <result column="pt_name" property="productTypeName"/>
+    </resultMap>
+
+    <!-- 新增采购记录 -->
+    <insert id="addPurchase" parameterType="PurchaseDo">
+        INSERT INTO t_purchase_record
+        (p_id,u_id,pr_price,pr_amount,pr_memo,pr_create_time)
+        VALUES
+        (#{productId},#{price},#{amount},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+    </insert>
+
+    <!-- 批量删除采购记录 -->
+    <delete id="delPurchase" parameterType="List">
+        DELETE FROM t_purchase_record WHERE pr_id IN
+        <foreach collection="list" item="purchaseId" index="index" open="(" separator="," close=")">
+            #{purchaseId}
+        </foreach>
+    </delete>
+
+    <!-- 查询采购记录 -->
+    <select id="queryPurchase" parameterType="Map" resultMap="PurchaseMap">
+        SELECT pr.*, p.p_name,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
+        INNER JOIN t_product p ON p.p_id = pr.p_id
+        INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
+        INNER JOIN t_user u ON u.u_id = pr.u_id
+        WHERE 1=1
+        <if test="productName != NULL">
+            AND p.p_name LIKE concat('%',#{productName},'%')
+        </if>
+        <if test="supplier != NULL">
+            AND p.p_supplier LIKE concat('%',#{supplier},'%')
+        </if>
+        <if test="productTypeId != NULL">
+            AND p.pt_id = #{productTypeId}
+        </if>
+        <if test="productTypeName != NULL">
+            AND pt.pt_name LIKE concat('%',#{productTypeName},'%')
+        </if>
+        <if test="productId != NULL">
+            AND pr.p_id = #{productId}
+        </if>
+        <if test="employeeId != NULL">
+            AND pr.u_id = #{employeeId}
+        </if>
+        <if test="employeeName != NULL">
+            AND u.u_name LIKE concat('%',#{employeeName},'%')
+        </if>
+        <if test="createTime != NULL">
+            AND pr.p_create_time = #{createTime}
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND pr.p_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND pr.p_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="purchaseId != NULL">
+            pr.pr_id = #{purchaseId}
+        </if>
+        <if test="start != NULL and psize != NULL ">
+            limit ${start}, ${psize}
+        </if>
+    </select>
+
+    <!-- 查询商品 -->
+    <select id="countPurchase" parameterType="Map" resultType="int">
+        SELECT COUNT(1) FROM t_purchase_record pr
+        INNER JOIN t_product p ON p.p_id = pr.p_id
+        INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
+        INNER JOIN t_user u ON u.u_id = pr.u_id
+        WHERE 1=1
+        <if test="productName != NULL">
+            AND p.p_name LIKE concat('%',#{productName},'%')
+        </if>
+        <if test="supplier != NULL">
+            AND p.p_supplier LIKE concat('%',#{supplier},'%')
+        </if>
+        <if test="productTypeId != NULL">
+            AND p.pt_id = #{productTypeId}
+        </if>
+        <if test="productTypeName != NULL">
+            AND pt.pt_name LIKE concat('%',#{productTypeName},'%')
+        </if>
+        <if test="productId != NULL">
+            AND pr.p_id = #{productId}
+        </if>
+        <if test="employeeId != NULL">
+            AND pr.u_id = #{employeeId}
+        </if>
+        <if test="employeeName != NULL">
+            AND u.u_name LIKE concat('%',#{employeeName},'%')
+        </if>
+        <if test="createTime != NULL">
+            AND pr.p_create_time = #{createTime}
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND pr.p_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND pr.p_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="purchaseId != NULL">
+            pr.pr_id = #{purchaseId}
+        </if>
+    </select>
+
+    <!-- 根据id查商品 -->
+    <select id="getPurchase" parameterType="String" resultMap="PurchaseMap">
+        SELECT pr.*, p.p_name,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
+        INNER JOIN t_product p ON p.p_id = pr.p_id
+        INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
+        INNER JOIN t_user u ON u.u_id = pr.u_id
+        WHERE pr.pr_id = #{purchaseId}
+    </select>
+</mapper>

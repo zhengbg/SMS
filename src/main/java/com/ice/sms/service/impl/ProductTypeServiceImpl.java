@@ -62,7 +62,7 @@ public class ProductTypeServiceImpl implements ProductTypeService
 		}
 
 		ProductTypeVo productTypeVo = addProductTypeRequest.getProductTypeVo ();
-		if(null == productTypeVo)
+		if (null == productTypeVo)
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resultInfo.setResultDesc ("productTypeVo can not be null");
@@ -198,6 +198,10 @@ public class ProductTypeServiceImpl implements ProductTypeService
 		}
 
 		Map<String, Object> params = new HashMap<> ();
+		if (null != queryProductTypeRequest.getProductTypeId ())
+		{
+			params.put ("productTypeId", queryProductTypeRequest.getProductTypeId ());
+		}
 		if (! StringUtils.isEmpty (queryProductTypeRequest.getProductTypeName ()))
 		{
 			params.put ("productTypeName", queryProductTypeRequest.getProductTypeName ());

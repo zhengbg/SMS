@@ -40,4 +40,6 @@ public class PurchaseDo implements Serializable
 	private String productName;
 	private String supplier;
 	private String employeeName;
+	private Integer productTypeId;
+	private String productTypeName;
 }

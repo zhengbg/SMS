@@ -28,6 +28,7 @@ import lombok.ToString;
 @ToString
 public class QueryMemberRequest extends RequestInfo
 {
+	private String memberId;
 	private String memberName;
 	private String address;
 	private String phone;

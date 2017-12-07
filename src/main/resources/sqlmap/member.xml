@@ -58,6 +58,9 @@
     <select id="queryMember" parameterType="Map" resultMap="MemberMap">
         SELECT * FROM t_member
         WHERE 1=1
+        <if test="memberId != NULL">
+            AND m_id = #{memberId}
+        </if>
         <if test="memberName != NULL">
             AND m_name LIKE concat('%',#{memberName},'%')
         </if>
@@ -97,6 +100,9 @@
     <select id="countMember" parameterType="Map" resultType="int">
         SELECT COUNT(1) FROM t_member
         WHERE 1=1
+        <if test="memberId != NULL">
+            AND m_id = #{memberId}
+        </if>
         <if test="memberName != NULL">
             AND m_name LIKE concat('%',#{memberName},'%')
         </if>

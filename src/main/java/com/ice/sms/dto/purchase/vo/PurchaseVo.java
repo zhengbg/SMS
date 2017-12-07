@@ -1,5 +1,5 @@
 /**
- * 文 件 名:  QueryProductRequest
+ * 文 件 名:  PurchaseVo
  * 版    权:  Quanten Teams. Copyright YYYY-YYYY,  All rights reserved
  * 描    述:  <描述>
  * 修 改 人:  zhengbinggui
@@ -8,12 +8,14 @@
  * 修改单号:  <修改单号>
  * 修改内容:  <修改内容>
  */
-package com.ice.sms.dto.product.request;
+package com.ice.sms.dto.purchase.vo;
 
-import com.ice.sms.common.base.RequestInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -26,20 +28,18 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class QueryProductRequest extends RequestInfo
+public class PurchaseVo implements Serializable
 {
+	private Integer purchaseId;
 	private String productId;
+	private String employeeId;
+	private BigDecimal price;
+	private Integer amount;
+	private String memo;
+	private String createTime;
 	private String productName;
 	private String supplier;
+	private String employeeName;
 	private Integer productTypeId;
 	private String productTypeName;
-	private Integer stock;
-	private String createTime;
-	private String lastUpdateTime;
-	private Integer minStock;
-	private Integer maxStock;
-	private String minCreateTime;
-	private String maxCreateTime;
-	private String minLastUpdateTime;
-	private String maxLastUpdateTime;
 }
