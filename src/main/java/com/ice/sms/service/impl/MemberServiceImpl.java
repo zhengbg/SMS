@@ -63,7 +63,12 @@ public class MemberServiceImpl implements MemberService
 		}
 
 		MemberVo memberVo = addMemberRequest.getMemberVo ();
-
+		if (null == memberVo)
+		{
+			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
+			resultInfo.setResultDesc ("memberVo can not be null");
+			return resultInfo;
+		}
 		if (StringUtils.isEmpty (memberVo.getMemberId ()))
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
@@ -334,8 +339,11 @@ public class MemberServiceImpl implements MemberService
 			return response;
 		}
 
-		MemberVo memberVo = change2Vo (memberDo);
-		response.setMemberVo (memberVo);
+		if(null != memberDo)
+		{
+			MemberVo memberVo = change2Vo (memberDo);
+			response.setMemberVo (memberVo);
+		}
 
 		LOGGER.debug (String.format ("SMS.MemberServiceImpl.queryMemberById.response:%s", response));
 		return response;

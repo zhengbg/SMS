@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ice.sms.dao.ProductDao">
+    <!-- 商品结果集 -->
+    <resultMap type="ProductDo" id="ProductMap">
+        <id column="p_id" property="productId"/>
+        <result column="p_name" property="productName"/>
+        <result column="p_scale" property="productScale"/>
+        <result column="p_price" property="price"/>
+        <result column="p_supplier" property="supplier"/>
+        <result column="p_stock" property="stock"/>
+        <result column="pt_id" property="productTypeId"/>
+        <result column="p_memo" property="memo"/>
+        <result column="p_create_time" property="createTime"/>
+        <result column="p_last_update_time" property="lastUpdateTime"/>
+        <result column="pt_name" property="productTypeName"/>
+    </resultMap>
+
+    <!-- 新增商品 -->
+    <insert id="addProduct" parameterType="ProductDo">
+        INSERT INTO t_product
+        (p_id,p_name,p_scale,p_price,p_supplier,p_stock,pt_id,p_memo,p_create_time,p_last_update_time)
+        VALUES
+        (#{productId},#{productName},#{productScale},#{price},#{supplier},#{stock},#{productTypeId},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+    </insert>
+
+    <!-- 批量删除商品 -->
+    <delete id="delProduct" parameterType="List">
+        DELETE FROM t_product WHERE p_id IN
+        <foreach collection="list" item="productId" index="index" open="(" separator="," close=")">
+            #{productId}
+        </foreach>
+    </delete>
+
+    <!-- 修改商品信息  -->
+    <update id="updateProduct" parameterType="Map">
+        UPDATE t_product
+        <set>
+            <if test="productName != null">
+                p_name = #{productName},
+            </if>
+            <if test="productScale != null">
+                p_scale = #{productScale},
+            </if>
+            <if test="price != null">
+                p_price = #{price},
+            </if>
+            <if test="supplier != null">
+                p_supplier = #{supplier},
+            </if>
+            <if test="productTypeId != null">
+                pt_id = #{productTypeId},
+            </if>
+            <if test="memo != null">
+                p_memo = #{memo},
+            </if>
+            p_last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+        </set>
+        WHERE p_id = #{productId} AND p_last_update_time = #{lastUpdateTime}
+    </update>
+
+    <!-- 增加商品库存 -->
+    <update id="addProductStock" parameterType="Map">
+        UPDATE t_product
+        <set>
+            p_stock = p_stock + #{addStock},
+            p_last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+        </set>
+        WHERE p_id = #{productId}
+    </update>
+
+    <!-- 减少商品库存 -->
+    <update id="reduceProductStock" parameterType="Map">
+        UPDATE t_product
+        <set>
+            p_stock = p_stock - #{reduceStock},
+            p_last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+        </set>
+        WHERE p_id = #{productId}
+    </update>
+
+    <!-- 查询商品 -->
+    <select id="queryProduct" parameterType="Map" resultMap="ProductMap">
+        SELECT p.*,pt.pt_name FROM t_product p INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
+        WHERE 1=1
+        <if test="productName != NULL">
+            AND p.p_name LIKE concat('%',#{productName},'%')
+        </if>
+        <if test="supplier != NULL">
+            AND p.p_supplier LIKE concat('%',#{supplier},'%')
+        </if>
+        <if test="productTypeId != NULL">
+            AND p.pt_id = #{productTypeId}
+        </if>
+        <if test="productTypeName != NULL">
+            AND pt.pt_name LIKE concat('%',#{productTypeName},'%')
+        </if>
+        <if test="stock != NULL">
+            AND p.p_stock = #{stock}
+        </if>
+        <if test="createTime != NULL">
+            AND p.p_create_time = #{createTime}
+        </if>
+        <if test="lastUpdateTime != NULL">
+            AND p.p_last_update_time = #{lastUpdateTime}
+        </if>
+        <if test="minStock != NULL">
+            <![CDATA[ AND p.p_stock >= #{minStock} ]]>
+        </if>
+        <if test="maxStock != NULL">
+            <![CDATA[ AND p.p_stock <= #{maxStock} ]]>
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND p.p_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND p.p_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="minLastUpdateTime != NULL">
+            <![CDATA[ AND p.p_last_update_time >= #{minLastUpdateTime} ]]>
+        </if>
+        <if test="maxLastUpdateTime != NULL">
+            <![CDATA[ AND p.p_last_update_time <= #{maxLastUpdateTime} ]]>
+        </if>
+        <if test="start != NULL and psize != NULL ">
+            limit ${start}, ${psize}
+        </if>
+    </select>
+
+    <!-- 查询商品 -->
+    <select id="countProduct" parameterType="Map" resultType="int">
+        SELECT COUNT(1) FROM t_product p INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
+        WHERE 1=1
+        <if test="productName != NULL">
+            AND p.p_name LIKE concat('%',#{productName},'%')
+        </if>
+        <if test="supplier != NULL">
+            AND p.p_supplier LIKE concat('%',#{supplier},'%')
+        </if>
+        <if test="productTypeId != NULL">
+            AND p.pt_id = #{productTypeId}
+        </if>
+        <if test="productTypeId != NULL">
+            AND p.pt_id = #{productTypeId}
+        </if>
+        <if test="stock != NULL">
+            AND p.p_stock = #{stock}
+        </if>
+        <if test="createTime != NULL">
+            AND p.p_create_time = #{createTime}
+        </if>
+        <if test="lastUpdateTime != NULL">
+            AND p.p_last_update_time = #{lastUpdateTime}
+        </if>
+        <if test="minStock != NULL">
+            <![CDATA[ AND p.p_stock >= #{minStock} ]]>
+        </if>
+        <if test="maxStock != NULL">
+            <![CDATA[ AND p.p_stock <= #{maxStock} ]]>
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND p.p_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND p.p_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="minLastUpdateTime != NULL">
+            <![CDATA[ AND p.p_last_update_time >= #{minLastUpdateTime} ]]>
+        </if>
+        <if test="maxLastUpdateTime != NULL">
+            <![CDATA[ AND p.p_last_update_time <= #{maxLastUpdateTime} ]]>
+        </if>
+    </select>
+
+    <!-- 根据id查商品 -->
+    <select id="getProduct" parameterType="String" resultMap="ProductMap">
+         SELECT p.*,pt.pt_name FROM t_product p INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
+        WHERE p.p_id = #{productId}
+    </select>
+</mapper>

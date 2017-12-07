@@ -62,6 +62,12 @@ public class ProductTypeServiceImpl implements ProductTypeService
 		}
 
 		ProductTypeVo productTypeVo = addProductTypeRequest.getProductTypeVo ();
+		if(null == productTypeVo)
+		{
+			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
+			resultInfo.setResultDesc ("productTypeVo can not be null");
+			return resultInfo;
+		}
 		if (StringUtils.isEmpty (productTypeVo.getProductTypeName ()))
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
