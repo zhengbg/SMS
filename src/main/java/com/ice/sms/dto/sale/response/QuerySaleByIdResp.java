@@ -11,7 +11,7 @@
 package com.ice.sms.dto.sale.response;
 
 import com.ice.sms.common.base.ResultInfo;
-import com.ice.sms.entity.SaleDo;
+import com.ice.sms.dto.sale.vo.SaleVo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,5 +29,5 @@ import lombok.ToString;
 @ToString
 public class QuerySaleByIdResp extends ResultInfo
 {
-	private SaleDo saleDo;
+	private SaleVo saleVo;
 }
