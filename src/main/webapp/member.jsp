@@ -91,7 +91,7 @@
                 </div>
                 <div class="am-u-sm-12 am-u-md-3">
                     <div class="am-input-group am-input-group-sm">
-                        <input type="text" placeholder="姓名..." id="search-account" class="am-form-field">
+                        <input type="text" placeholder="姓名..." id="search-name" class="am-form-field">
 					  <span class="am-input-group-btn">
 						<button class="am-btn am-btn-default" id="search-btn" type="button">搜索</button>
 					  </span>
