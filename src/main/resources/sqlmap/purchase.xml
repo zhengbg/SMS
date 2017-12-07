@@ -24,7 +24,7 @@
         INSERT INTO t_purchase_record
         (p_id,u_id,pr_price,pr_amount,pr_memo,pr_create_time)
         VALUES
-        (#{productId},#{price},#{amount},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+        (#{productId},#{employeeId},#{price},#{amount},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
     </insert>
 
     <!-- 批量删除采购记录 -->
@@ -37,7 +37,7 @@
 
     <!-- 查询采购记录 -->
     <select id="queryPurchase" parameterType="Map" resultMap="PurchaseMap">
-        SELECT pr.*, p.p_name,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
+        SELECT pr.*, p.p_name,p.p_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
         INNER JOIN t_product p ON p.p_id = pr.p_id
         INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
         INNER JOIN t_user u ON u.u_id = pr.u_id
@@ -73,7 +73,7 @@
             <![CDATA[ AND pr.p_create_time <= #{maxCreateTime} ]]>
         </if>
         <if test="purchaseId != NULL">
-            pr.pr_id = #{purchaseId}
+            AND pr.pr_id = #{purchaseId}
         </if>
         <if test="start != NULL and psize != NULL ">
             limit ${start}, ${psize}
@@ -118,13 +118,13 @@
             <![CDATA[ AND pr.p_create_time <= #{maxCreateTime} ]]>
         </if>
         <if test="purchaseId != NULL">
-            pr.pr_id = #{purchaseId}
+            AND pr.pr_id = #{purchaseId}
         </if>
     </select>
 
     <!-- 根据id查商品 -->
     <select id="getPurchase" parameterType="String" resultMap="PurchaseMap">
-        SELECT pr.*, p.p_name,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
+        SELECT pr.*, p.p_name,p.p_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
         INNER JOIN t_product p ON p.p_id = pr.p_id
         INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
         INNER JOIN t_user u ON u.u_id = pr.u_id

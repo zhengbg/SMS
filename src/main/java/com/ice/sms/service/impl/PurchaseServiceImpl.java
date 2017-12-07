@@ -259,7 +259,7 @@ public class PurchaseServiceImpl implements PurchaseService
 			response.setResultDesc ("getPurchaseRequest can not be null");
 			return response;
 		}
-		if (null != getPurchaseRequest.getPurchaseId ())
+		if (null == getPurchaseRequest.getPurchaseId ())
 		{
 			response.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			response.setResultDesc ("purchaseId can not be null");
