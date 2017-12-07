@@ -5,7 +5,7 @@ $("#user-save").on('click',function () {
     saveUser();
 })
 $("#user-cancel").on('click',function () {
-    location.href = "user.jsp";
+    location.href = "../../employee.jsp";
 })
 function find() {
     var userId = UrlParam("userId");
@@ -70,7 +70,7 @@ function saveUser() {
             alert(data.resultDesc);
             return;
         }
-        location.href = "user.jsp";
+        location.href = "../../employee.jsp";
     },
     function (e) {
         alert("network error!")

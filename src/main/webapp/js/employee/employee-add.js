@@ -5,7 +5,7 @@ $("#user-save").on('click',function () {
     addUser();
 })
 $("#user-cancel").on('click',function () {
-    location.href = "user.jsp";
+    location.href = "../../employee.jsp";
 })
 function addUser() {
     var account = $("#userId").val();
@@ -26,7 +26,7 @@ function addUser() {
             alert(data.resultDesc);
             return;
         }
-        location.href = "user.jsp";
+        location.href = "../../employee.jsp";
     },
     function (e) {
         alert("network error!")

@@ -51,8 +51,8 @@
                 <li class="admin-parent">
                     <a class="am-cf" data-am-collapse="{target: '#security-nav'}"><span class="am-icon-users am-icon-fw"></span> 用户管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
                     <ul class="am-list am-collapse admin-sidebar-sub am-in" id="security-nav">
-                        <li><a href="user.jsp" class="am-cf"><span class="am-icon-male am-icon-fw"></span> 员工管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
-                        <li><a href="#" class="am-cf"><span class="am-icon-flag am-icon-fw"></span> 会员管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+                        <li><a href="employee.jsp" class="am-cf"><span class="am-icon-male am-icon-fw"></span> 员工管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+                        <li><a href="member.jsp" class="am-cf"><span class="am-icon-flag am-icon-fw"></span> 会员管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
                     </ul>
                 </li>
                 <li><a href="#"><span class="am-icon-building am-icon-fw"></span>商品管理</a></li>
@@ -147,6 +147,6 @@
 <script src="js/app.js"></script>
 <script src="js/page.js"></script>
 <script src="js/common.js"></script>
-<script src="js/user/user.js"></script>
+<script src="js/employee/employee.js"></script>
 </body>
 </html>
