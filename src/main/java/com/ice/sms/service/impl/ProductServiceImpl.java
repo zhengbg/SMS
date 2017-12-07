@@ -413,7 +413,7 @@ public class ProductServiceImpl implements ProductService
 		productVo.setProductTypeId (productDo.getProductTypeId ());
 		productVo.setMemo (productDo.getMemo ());
 		productVo.setCreateTime (productDo.getCreateTime ());
-		productVo.setLastUpdateTime (productDo.getCreateTime ());
+		productVo.setLastUpdateTime (productDo.getLastUpdateTime ());
 		productVo.setProductTypeName (productDo.getProductTypeName ());
 		return productVo;
 	}

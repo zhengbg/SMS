@@ -76,8 +76,8 @@
         <div class="admin-content-body">
             <div class="am-cf am-padding am-padding-bottom-0">
                 <div class="am-fl am-cf">
-                    <strong class="am-text-primary am-text-lg">会员管理</strong> /
-                    <small>新增</small>
+                    <strong class="am-text-primary am-text-lg">商品管理</strong> /
+                    <small>编辑</small>
                 </div>
             </div>
 
@@ -90,79 +90,77 @@
 
                 <div class="am-tabs-bd">
                     <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-                        <div class="am-g am-margin-top">
+                        <input type="hidden" id="lastUpdateTime" />
+                        <input type="hidden" id="productId" class="am-input-sm" style = "width:200px;height:32px;">
+                    <%--<div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                帐号
+                                商品编号
                             </div>
                             <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="memberId" class="am-input-sm" style = "width:200px;height:32px;"> *必填
+                            </div>
+                        </div>--%>
+                        <div class="am-g am-margin-top">
+                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                商品名称
+                            </div>
+                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
+                                <input type="text" id="productName" class="am-input-sm" style = "width:200px;height:32px;"> *必填
+                            </div>
+                        </div>
+                        <div class="am-g am-margin-top">
+                            <div class="am-u-sm-4 am-u-md-2 am-text-right">商品类型</div>
+                            <div class="am-u-sm-8 am-u-md-10">
+                                <select id = "type-list"  data-am-selected="{maxHeight: 100}">
+                                </select> *必选
                             </div>
                         </div>
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                姓名
+                                规格
                             </div>
                             <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="memberName" class="am-input-sm" style = "width:200px;height:32px;">
+                                <input type="text" id="scale" class="am-input-sm" style = "width:200px;height:32px;"> *必填
                             </div>
                         </div>
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                身份证
+                                单价
                             </div>
                             <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="idCard" class="am-input-sm" style = "width:200px;height:32px;">
+                                <input type="text" id="price" class="am-input-sm" style = "width:200px;height:32px;"> *必填
                             </div>
                         </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                联系号码
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="phone" class="am-input-sm" style = "width:200px;height:32px;">
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                住址
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="address" class="am-input-sm" style = "width:200px;height:32px;">
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                余额
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="balance" value="0" class="am-input-sm" style = "width:200px;height:32px;">
-                            </div>
-                        </div>
-
                         <%--<div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                邮箱地址
+                                数量
                             </div>
                             <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="email" class="am-input-sm" style = "width:200px;height:32px;"> *必填
+                                <input type="text" id="stock" class="am-input-sm" style = "width:200px;height:32px;">
+                            </div>
+                        </div>--%>
+                        <div class="am-g am-margin-top">
+                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                供应商
+                            </div>
+                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
+                                <input type="text" id="supplier"class="am-input-sm" style = "width:200px;height:32px;"> *必填
                             </div>
                         </div>
---%>
-                        <%--<div class="am-g am-margin-top-sm">
+                        <div class="am-g am-margin-top-sm">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">
                                 新增描述
                             </div>
                             <div class="am-u-sm-12 am-u-md-10">
-                                <textarea rows="5" id="desc" cols="30" placeholder="请输入..."></textarea>
+                                <textarea rows="5" id="memo" cols="30" placeholder="请输入..."></textarea>
                             </div>
-                        </div>--%>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="am-margin">
-                <button type="button" id="member-save" class="am-btn am-btn-primary am-btn-xs">保存</button>
-                <button type="button" id="member-cancel" class="am-btn am-btn-primary am-btn-xs">取消</button>
+                <button type="button" id="pro-save" class="am-btn am-btn-primary am-btn-xs">保存</button>
+                <button type="button" id="pro-cancel" class="am-btn am-btn-primary am-btn-xs">取消</button>
             </div>
         </div>
 
@@ -178,6 +176,6 @@
 <script src="js/app.js"></script>
 <script src="js/page.js"></script>
 <script src="js/common.js"></script>
-<script src="js/member/member-add.js"></script>
+<script src="js/product/product-edit.js"></script>
 </body>
 </html>

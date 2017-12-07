@@ -55,7 +55,7 @@
                         <li><a href="member.jsp" class="am-cf"><span class="am-icon-flag am-icon-fw"></span> 会员管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
                     </ul>
                 </li>
-                <li><a href="#"><span class="am-icon-building am-icon-fw"></span>商品管理</a></li>
+                <li><a href="product.jsp"><span class="am-icon-building am-icon-fw"></span>商品管理</a></li>
                 <li><a href="#"><span class="am-icon-shopping-basket am-icon-fw"></span>采购管理</a></li>
                 <li><a href="#"><span class="am-icon-sellsy am-icon-fw"></span>销售管理</a></li>
             </ul>
