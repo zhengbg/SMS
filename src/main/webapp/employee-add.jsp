@@ -110,7 +110,6 @@
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">用户类型</div>
                             <div class="am-u-sm-8 am-u-md-10">
                                 <select id = "type-list" data-am-selected="{maxHeight: 100}">
-                                    <option value="0">管理员</option>
                                     <option value="1">收银员</option>
                                     <option value="2">采购员</option>
                                 </select>

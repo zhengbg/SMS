@@ -84,7 +84,7 @@
                 <div class="am-u-sm-12 am-u-md-6">
                     <div class="am-btn-toolbar">
                         <div class="am-btn-group am-btn-group-xs">
-                            <button type="button" id="user-plus" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
+                            <button type="button" id="member-plus" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
                             <button type="button" id="batch-delete" class="am-btn am-btn-dan"><span class="am-icon-trash-o"></span> 删除</button>
                         </div>
                     </div>

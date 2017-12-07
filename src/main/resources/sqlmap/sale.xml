@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ice.sms.dao.SaleDao">
-    <resultMap id="saleMap" type="saleDao">
+    <resultMap id="saleMap" type="saleDo">
         <id column="sr_id" property="saleId"></id>
         <result column="p_id" property="productId"></result>
         <result column="u_id" property="userId"></result>
@@ -59,13 +59,13 @@
         WHERE t.p_id = t2.p_id
     </select>
     <!--新增用户-->
-    <insert id="addSaleRecord" parameterType="saleDao">
+    <insert id="addSaleRecord" parameterType="saleDo">
         INSERT INTO t_sale_record (p_id,u_id,m_id,sr_price,sr_amount,memo,sr_create_time,sr_last_update_time)
         VALUES
         (#{productId},#{userId},#{memberId},#{price},#{amount},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
     </insert>
     <!--修改用户-->
-    <update id="updateSaleRecord" parameterType="saleDao">
+    <update id="updateSaleRecord" parameterType="saleDo">
     UPDATE t_sale_record
         <set>
             <if test="productId != null">

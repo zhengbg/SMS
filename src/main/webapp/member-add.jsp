@@ -76,8 +76,8 @@
         <div class="admin-content-body">
             <div class="am-cf am-padding am-padding-bottom-0">
                 <div class="am-fl am-cf">
-                    <strong class="am-text-primary am-text-lg">表单</strong> /
-                    <small>form</small>
+                    <strong class="am-text-primary am-text-lg">会员管理</strong> /
+                    <small>新增</small>
                 </div>
             </div>
 
@@ -90,43 +90,12 @@
 
                 <div class="am-tabs-bd">
                     <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-                        <input type="hidden" id="lastUpdateTime" />
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                用户帐号
+                                帐号
                             </div>
                             <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="userId" class="am-input-sm" style = "width:200px;height:32px;"> *必填
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                用户密码
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="password" placeholder="默认123456" class="am-input-sm" style = "width:200px;height:32px;">
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">用户类型</div>
-                            <div class="am-u-sm-8 am-u-md-10">
-                                <select id = "type-list" data-am-selected="{maxHeight: 100}">
-                                    <option value="1">收银员</option>
-                                    <option value="2">采购员</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">状态</div>
-                            <div class="am-u-sm-8 am-u-md-10">
-                                <div class="am-btn-group" data-am-button>
-                                    <label id="normal-label" class="am-btn am-btn-default am-btn-xs">
-                                        <input type="radio"  name="options" id="option1"> 正常
-                                    </label>
-                                    <label  id="lock-label" class="am-btn am-btn-default am-btn-xs">
-                                        <input type="radio" name="options" id="option2"> 锁定
-                                    </label>
-                                </div>
+                                <input type="text" id="memberId" class="am-input-sm" style = "width:200px;height:32px;"> *必填
                             </div>
                         </div>
                         <div class="am-g am-margin-top">
@@ -134,7 +103,15 @@
                                 姓名
                             </div>
                             <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="username" class="am-input-sm" style = "width:200px;height:32px;"> *必填
+                                <input type="text" id="memberName" class="am-input-sm" style = "width:200px;height:32px;">
+                            </div>
+                        </div>
+                        <div class="am-g am-margin-top">
+                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                身份证
+                            </div>
+                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
+                                <input type="text" id="idCard" class="am-input-sm" style = "width:200px;height:32px;">
                             </div>
                         </div>
                         <div class="am-g am-margin-top">
@@ -144,7 +121,22 @@
                             <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
                                 <input type="text" id="phone" class="am-input-sm" style = "width:200px;height:32px;">
                             </div>
-
+                        </div>
+                        <div class="am-g am-margin-top">
+                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                住址
+                            </div>
+                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
+                                <input type="text" id="address" class="am-input-sm" style = "width:200px;height:32px;">
+                            </div>
+                        </div>
+                        <div class="am-g am-margin-top">
+                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                余额
+                            </div>
+                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
+                                <input type="text" id="balance" value="0" class="am-input-sm" style = "width:200px;height:32px;">
+                            </div>
                         </div>
 
                         <%--<div class="am-g am-margin-top">
@@ -169,8 +161,8 @@
             </div>
 
             <div class="am-margin">
-                <button type="button" id="user-save" class="am-btn am-btn-primary am-btn-xs">保存</button>
-                <button type="button" id="user-cancel" class="am-btn am-btn-primary am-btn-xs">取消</button>
+                <button type="button" id="member-save" class="am-btn am-btn-primary am-btn-xs">保存</button>
+                <button type="button" id="member-cancel" class="am-btn am-btn-primary am-btn-xs">取消</button>
             </div>
         </div>
 
@@ -186,6 +178,6 @@
 <script src="js/app.js"></script>
 <script src="js/page.js"></script>
 <script src="js/common.js"></script>
-<script src="js/employee/employee-edit.js"></script>
+<script src="js/member/member-add.js"></script>
 </body>
 </html>

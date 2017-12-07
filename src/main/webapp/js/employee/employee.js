@@ -6,7 +6,7 @@ var userName = "";
 var status = "";
 var flag = "";
 $("#user-plus").on('click',function () {
-    location.href = "user-add.jsp";
+    location.href = "../../employee-add.jsp";
 })
 $("#batch-delete").on('click',function () {
     var arr =  [];
@@ -23,7 +23,7 @@ $("#batch-delete").on('click',function () {
     batchDel(data);
 })
 function editUser(userId){
-    location.href = "user-edit.jsp?userId="+userId;
+    location.href = "employee-edit.jsp?userId="+userId;
 }
 $('input[name="selectall"]').click(function(){
     if($(this).is(':checked')){

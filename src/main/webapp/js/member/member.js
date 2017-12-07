@@ -3,6 +3,12 @@
  */
 var pageIndex = 1;
 var flag = "";
+$("#member-plus").on('click',function () {
+    location.href = "../../member-add.jsp";
+})
+function delMember() {
+    
+}
 function paintData(data){
     var html = "";
     var memberVos = data.memberVos;
@@ -20,7 +26,7 @@ function paintData(data){
         html = html + "<td>" + member.balance + "</td>";
         html = html + "<td><div class=\"am-btn-group am-btn-group-xs\"><div class=\"am-btn-group am-btn-group-xs\">";
         html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-secondary\" onclick=\"editUser('"+member.memberId+"')\"><span class=\"am-icon-pencil-square-vo\"></span> 编辑</span>";
-        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\" onclick=\"delUser('"+member.memberId+"')\"><span class=\"am-icon-trash-o\"></span> 删除</span>";
+        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\" onclick=\"delMember('"+member.memberId+"')\"><span class=\"am-icon-trash-o\"></span> 删除</span>";
         html = html + "</div></div></td>";
         html = html + "</tr>";
     }
