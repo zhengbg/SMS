@@ -15,6 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -30,11 +31,13 @@ import java.io.Serializable;
 public class PurchaseDo implements Serializable
 {
 	private Integer purchaseId;
-	private Integer productId;
-	private Integer employeeId;
-	private Integer price;
+	private String productId;
+	private String employeeId;
+	private BigDecimal price;
 	private Integer amount;
 	private String memo;
 	private String createTime;
-	private String lastUpdateTime;
+	private String productName;
+	private String supplier;
+	private String employeeName;
 }
