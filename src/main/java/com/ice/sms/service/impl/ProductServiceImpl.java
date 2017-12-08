@@ -98,10 +98,10 @@ public class ProductServiceImpl implements ProductService
 			resultInfo.setResultDesc ("price can not be null");
 			return resultInfo;
 		}
-		if (StringUtils.isEmpty (productVo.getSupplier ()))
+		if (StringUtils.isEmpty (productVo.getSupplierId ()))
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
-			resultInfo.setResultDesc ("supplier can not be null");
+			resultInfo.setResultDesc ("supplierId can not be null");
 			return resultInfo;
 		}
 		if (null == productVo.getStock ())
