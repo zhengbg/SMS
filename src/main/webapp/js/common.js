@@ -93,3 +93,16 @@ function removeByValue(arr, val) {
         }
     }
 }
+
+$('input[name="selectall"]').click(function(){
+    if($(this).is(':checked')){
+        $('input[name="checkBox"]').each(function(){
+            $(this).prop("checked",true);
+        });
+    }else{
+        $('input[name="checkBox"]').each(function(){
+            $(this).removeAttr("checked",false);
+        });
+    }
+
+});

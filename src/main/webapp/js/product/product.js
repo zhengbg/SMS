@@ -52,7 +52,7 @@ $("#batch-delete").on('click',function () {
 })
 function delProduct(productId) {
     var data = {
-        "productIds":[productId]
+        "purchaseIds":[productId]
     }
     batchDel(data);
 }

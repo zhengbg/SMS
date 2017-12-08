@@ -84,7 +84,7 @@
     <div class="admin-content">
         <div class="admin-content-body">
             <div class="am-cf am-padding am-padding-bottom-0">
-                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">商品管理</strong>
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">采购管理</strong>
                     <small></small>
                 </div>
             </div>
@@ -99,6 +99,13 @@
                         </select>
                     </div>
                 </div>
+                <div class="am-u-sm-12 am-u-md-3" style="width: 30%;height: 50px;">
+                    <div class="am-form-group">
+                        <label for="employee-list" class="am-form-label search-label">采购员:&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </label>
+                        <select id="employee-list" data-am-selected="{btnSize: 'sm'}">
+                        </select>
+                    </div>
+                </div>
                 <div class="am-u-sm-12 am-u-md-3" style="width: 30%;">
                     <div class="am-form-group">
                         <label for="productId" class="am-form-label search-label" style="float: left;">商品编号: &nbsp;&nbsp;</label>
@@ -107,7 +114,7 @@
                 </div>
                 <div class="am-u-sm-12 am-u-md-3" style="width: 30%;">
                     <div class="am-form-group">
-                        <label for="productName" class="am-form-label search-label" style="float: left;">商品名称:&nbsp;&nbsp; </label>
+                        <label for="productName" class="am-form-label search-label" style="float: left;">商品名称:&nbsp;&nbsp;&nbsp;  </label>
                         <input type="text" id="productName" class="am-form-field search-input">
                     </div>
                 </div>
@@ -131,7 +138,7 @@
                 </div>
                 <div class="am-u-sm-12 am-u-md-3" style="width: 30%;">
                     <div class="am-form-group">
-                        <label for="endTime" class="am-form-label search-label" style="float: left;">结束日期:&nbsp;&nbsp;</label>
+                        <label for="endTime" class="am-form-label search-label" style="float: left;">结束日期:&nbsp;&nbsp;&nbsp; </label>
                         <form action="" class="am-form am-form-inline">
                             <div class="am-form-group am-form-icon" style="width: 200px;">
                                 <i class="am-icon-calendar"></i>
@@ -141,7 +148,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="am-u-sm-12 am-u-md-3" style="width: 22%;">
+                <div class="am-u-sm-12 am-u-md-3" style="width: 70%;">
                     <div class="am-form-group">
                         <button class="am-btn am-btn-default am-btn-sm" id="search-btn" type="button"><span class="am-icon-search"></span>搜索
                         </button>
@@ -157,7 +164,7 @@
                 <div class="am-u-sm-12 am-u-md-6">
                     <div class="am-btn-toolbar">
                         <div class="am-btn-group am-btn-group-xs">
-                            <button type="button" id="pro-plus" class="am-btn am-btn-default"><span
+                            <button type="button" id="purchase-plus" class="am-btn am-btn-default"><span
                                     class="am-icon-plus"></span> 新增
                             </button>
                             <button type="button" id="batch-delete" class="am-btn am-btn-dan"><span
@@ -176,15 +183,14 @@
                                 <th>商品编号</th>
                                 <th>商品名称</th>
                                 <th>商品类型</th>
-                                <th>规格</th>
+                                <th>采购员</th>
                                 <th>单价</th>
                                 <th>数量</th>
-                                <th>供应商</th>
                                 <th>创建时间</th>
                                 <th class="table-set">操作</th>
                             </tr>
                             </thead>
-                            <tbody id="product-list">
+                            <tbody id="employee-data">
 
                             </tbody>
                         </table>
@@ -214,6 +220,6 @@
 <script src="js/app.js"></script>
 <script src="js/page.js"></script>
 <script src="js/common.js"></script>
-<script src="js/product/product.js"></script>
+<script src="js/purchase/purchase.js"></script>
 </body>
 </html>
