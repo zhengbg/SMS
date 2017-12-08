@@ -213,6 +213,10 @@ public class PurchaseServiceImpl implements PurchaseService
 		{
 			params.put ("purchaseId", queryPurchaseRequest.getPurchaseId ());
 		}
+		if (null != queryPurchaseRequest.getStorage ())
+		{
+			params.put ("storage", queryPurchaseRequest.getStorage ());
+		}
 		if (null != queryPurchaseRequest.getPageIndex () && null != queryPurchaseRequest.getPageSize ())
 		{
 			params.put ("start", (queryPurchaseRequest.getPageIndex () - 1) * queryPurchaseRequest.getPageSize ());
@@ -301,6 +305,9 @@ public class PurchaseServiceImpl implements PurchaseService
 		purchaseDo.setPrice (purchaseVo.getPrice ());
 		purchaseDo.setAmount (purchaseVo.getAmount ());
 		purchaseDo.setMemo (purchaseVo.getMemo ());
+		purchaseDo.setAddress (purchaseVo.getAddress ());
+		purchaseDo.setPhone (purchaseVo.getPhone ());
+		purchaseDo.setEmail (purchaseVo.getEmail ());
 
 		return purchaseDo;
 	}
@@ -315,12 +322,17 @@ public class PurchaseServiceImpl implements PurchaseService
 		purchaseVo.setAmount (purchaseDo.getAmount ());
 		purchaseVo.setMemo (purchaseDo.getMemo ());
 		purchaseVo.setCreateTime (purchaseDo.getCreateTime ());
+		purchaseVo.setLastUpdateTime (purchaseDo.getLastUpdateTime ());
 		purchaseVo.setProductName (purchaseDo.getProductName ());
 		purchaseVo.setSupplier (purchaseDo.getSupplier ());
 		purchaseVo.setEmployeeName (purchaseDo.getEmployeeName ());
 		purchaseVo.setProductTypeId (purchaseDo.getProductTypeId ());
 		purchaseVo.setProductTypeName (purchaseDo.getProductTypeName ());
 		purchaseVo.setSupplierId (purchaseDo.getSupplierId ());
+		purchaseVo.setStorage (purchaseDo.getStorage ());
+		purchaseVo.setAddress (purchaseDo.getAddress ());
+		purchaseVo.setPhone (purchaseDo.getPhone ());
+		purchaseVo.setEmail (purchaseDo.getEmail ());
 
 		return purchaseVo;
 	}

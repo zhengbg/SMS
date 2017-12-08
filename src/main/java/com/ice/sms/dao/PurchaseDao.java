@@ -33,5 +33,7 @@ public interface PurchaseDao
 
 	int countPurchase (Map<String, Object> params);
 
-	PurchaseDo getPurchase(String purchaseId);
+	PurchaseDo getPurchase (String purchaseId);
+
+	void updateStorage (Map<String, Object> params);
 }

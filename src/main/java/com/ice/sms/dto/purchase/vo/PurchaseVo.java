@@ -43,4 +43,12 @@ public class PurchaseVo implements Serializable
 	private Integer productTypeId;
 	private String productTypeName;
 	private Integer supplierId;
+	private String lastUpdateTime;
+	/**
+	 * 0：已入库 1：未入库
+	 */
+	private Integer storage;
+	private String address;
+	private String phone;
+	private String email;
 }

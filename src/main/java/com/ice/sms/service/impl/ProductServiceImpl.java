@@ -13,6 +13,7 @@ package com.ice.sms.service.impl;
 import com.ice.sms.common.base.ResultInfo;
 import com.ice.sms.common.constant.Constant;
 import com.ice.sms.dao.ProductDao;
+import com.ice.sms.dao.PurchaseDao;
 import com.ice.sms.dto.product.request.*;
 import com.ice.sms.dto.product.response.GetProductResponse;
 import com.ice.sms.dto.product.response.QueryProductResponse;
@@ -46,6 +47,8 @@ public class ProductServiceImpl implements ProductService
 
 	@Autowired
 	private ProductDao productDao;
+	@Autowired
+	private PurchaseDao purchaseDao;
 
 	@Override
 	public ResultInfo addProduct (AddProductRequest addProductRequest)
@@ -60,62 +63,116 @@ public class ProductServiceImpl implements ProductService
 			resultInfo.setResultDesc ("addProductRequest can not be null");
 			return resultInfo;
 		}
-
-		ProductVo productVo = addProductRequest.getProductVo ();
-		if (null == productVo)
-		{
-			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
-			resultInfo.setResultDesc ("productVo can not be null");
-			return resultInfo;
-		}
-		if (StringUtils.isEmpty (productVo.getProductId ()))
+		if (StringUtils.isEmpty (addProductRequest.getProductId ()))
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resultInfo.setResultDesc ("productId can not be null");
 			return resultInfo;
 		}
-		if (StringUtils.isEmpty (productVo.getProductName ()))
+		if (StringUtils.isEmpty (addProductRequest.getProductName ()))
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resultInfo.setResultDesc ("productName can not be null");
 			return resultInfo;
 		}
-		if (StringUtils.isEmpty (productVo.getProductScale ()))
+		if (StringUtils.isEmpty (addProductRequest.getProductScale ()))
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resultInfo.setResultDesc ("productScale can not be null");
 			return resultInfo;
 		}
-		if (null == productVo.getProductTypeId ())
+		if (null == addProductRequest.getProductTypeId ())
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resultInfo.setResultDesc ("productTypeId can not be null");
 			return resultInfo;
 		}
-		if (null == productVo.getPrice ())
+		if (null == addProductRequest.getSalePrice ())
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
-			resultInfo.setResultDesc ("price can not be null");
+			resultInfo.setResultDesc ("salePrice can not be null");
 			return resultInfo;
 		}
-		if (StringUtils.isEmpty (productVo.getSupplierId ()))
+		if (StringUtils.isEmpty (addProductRequest.getSupplierId ()))
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resultInfo.setResultDesc ("supplierId can not be null");
 			return resultInfo;
 		}
-		if (null == productVo.getStock ())
+		if (null == addProductRequest.getStock ())
 		{
 			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
 			resultInfo.setResultDesc ("stock can not be null");
 			return resultInfo;
 		}
+		if (null == addProductRequest.getPurchaseId ())
+		{
+			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
+			resultInfo.setResultDesc ("purchaseId can not be null");
+			return resultInfo;
+		}
+		if (StringUtils.isEmpty (addProductRequest.getPurchaseLastUpdateTime ()))
+		{
+			resultInfo.setResultCode (Constant.Common.MISSING_PARAMETERS_CODE);
+			resultInfo.setResultDesc ("purchaseLastUpdateTime can not be null");
+			return resultInfo;
+		}
 
-		ProductDo productDo = change2Do (productVo);
+		ProductDo productDo = null;
+		ProductDo productDo1 = null;
+		Map<String, Object> addProductStockParams = null;
+		Map<String, Object> updateStorageParams = new HashMap<> ();
+		//查看是否存在此商品
+		try
+		{
+			productDo = productDao.getProduct (addProductRequest.getProductId ());
+		}
+		catch (Exception e)
+		{
+			LOGGER.error ("SMS.ProductServiceImpl.addProduct.exception", e);
+			resultInfo.setResultCode (Constant.Common.SQL_EXCEPTION_CODE);
+			resultInfo.setResultDesc (Constant.Common.SQL_EXCEPTION_DESC);
+			return resultInfo;
+		}
+
+		if (null == productDo)
+		{
+			//不存在此商品,则新增商品
+			productDo1 = new ProductDo ();
+			productDo1.setProductId (addProductRequest.getProductId ());
+			productDo1.setProductName (addProductRequest.getProductName ());
+			productDo1.setProductScale (addProductRequest.getProductScale ());
+			productDo1.setPrice (addProductRequest.getSalePrice ());
+			productDo1.setStock (addProductRequest.getStock ());
+			productDo1.setProductTypeId (addProductRequest.getProductTypeId ());
+			productDo1.setMemo (addProductRequest.getProductMemo ());
+			productDo1.setSupplierId (addProductRequest.getSupplierId ());
+		}
+		else
+		{
+			//存在此商品，则增加库存
+			addProductStockParams = new HashMap<> ();
+			addProductStockParams.put ("addStock", addProductRequest.getStock ());
+			addProductStockParams.put ("productId", addProductRequest.getProductId ());
+		}
+
+		updateStorageParams.put ("purchaseId", addProductRequest.getPurchaseId ());
+		updateStorageParams.put ("lastUpdateTime", addProductRequest.getPurchaseLastUpdateTime ());
+		updateStorageParams.put ("storage", 0);
 
 		try
 		{
-			productDao.addProduct (productDo);
+			if (null == productDo)
+			{
+				//不存在此商品,则新增商品
+				productDao.addProduct (productDo1);
+			}
+			else
+			{
+				//存在此商品，则增加库存
+				productDao.addProductStock (addProductStockParams);
+			}
+			purchaseDao.updateStorage (updateStorageParams);
 		}
 		catch (Exception e)
 		{

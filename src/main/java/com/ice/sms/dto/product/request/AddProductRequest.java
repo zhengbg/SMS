@@ -10,12 +10,12 @@
  */
 package com.ice.sms.dto.product.request;
 
-import com.ice.sms.dto.product.vo.ProductVo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <一句话功能简述> <功能详细描述>
@@ -30,5 +30,14 @@ import java.io.Serializable;
 @ToString
 public class AddProductRequest implements Serializable
 {
-	private ProductVo productVo;
+	private String productId;
+	private Integer productTypeId;
+	private String productName;
+	private String productScale;
+	private BigDecimal salePrice;
+	private Integer stock;
+	private String productMemo;
+	private Integer supplierId;
+	private Integer purchaseId;
+	private String purchaseLastUpdateTime;
 }

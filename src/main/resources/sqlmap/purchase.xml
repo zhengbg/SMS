@@ -18,14 +18,19 @@
         <result column="u_name" property="employeeName"/>
         <result column="pt_id" property="productTypeId"/>
         <result column="pt_name" property="productTypeName"/>
+        <result column="pr_last_update_time" property="lastUpdateTime"/>
+        <result column="pr_storage" property="storage"/>
+        <result column="pr_address" property="address"/>
+        <result column="pr_phone" property="phone"/>
+        <result column="pr_email" property="email"/>
     </resultMap>
 
     <!-- 新增采购记录 -->
     <insert id="addPurchase" parameterType="PurchaseDo">
         INSERT INTO t_purchase_record
-        (p_id,u_id,pr_price,pr_amount,pr_memo,pr_create_time)
+        (p_id,u_id,pr_price,pr_amount,pr_memo,pr_create_time,pr_last_update_time,pr_storage,pr_address,pr_phone,pr_email)
         VALUES
-        (#{productId},#{employeeId},#{price},#{amount},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+        (#{productId},#{employeeId},#{price},#{amount},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),1,#{address},#{phone},#{email})
     </insert>
 
     <!-- 批量删除采购记录 -->
@@ -35,6 +40,18 @@
             #{purchaseId}
         </foreach>
     </delete>
+
+    <!-- 修改入库状态 -->
+    <update id="updateStorage" parameterType="Map">
+        UPDATE t_purchase_record
+        <set>
+            <if test="storage != NULL">
+                pr_storage = #{storage},
+            </if>
+            pr_last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+        </set>
+        WHERE pr_id = #{purchaseId} AND pr_last_update_time = #{lastUpdateTime}
+    </update>
 
     <!-- 查询采购记录 -->
     <select id="queryPurchase" parameterType="Map" resultMap="PurchaseMap">
@@ -46,6 +63,9 @@
         WHERE 1=1
         <if test="productName != NULL">
             AND p.p_name LIKE concat('%',#{productName},'%')
+        </if>
+        <if test="storage != NULL">
+            AND p.pr_storage = #{storage}
         </if>
         <if test="supplierId != NULL">
             AND p.s_id = #{supplierId}
@@ -75,7 +95,7 @@
             <![CDATA[ AND pr.pr_create_time >= #{minCreateTime} ]]>
         </if>
         <if test="maxCreateTime != NULL">
-            <![CDATA[ AND pr.pr_create_time <= #{maxCreateTime} ]]>
+            <![CDATA[ AND pr.pr_create_time <= #{maxCreateTime} ]]>4
         </if>
         <if test="purchaseId != NULL">
             AND pr.pr_id = #{purchaseId}
@@ -95,6 +115,9 @@
         WHERE 1=1
         <if test="productName != NULL">
             AND p.p_name LIKE concat('%',#{productName},'%')
+        </if>
+        <if test="storage != NULL">
+            AND p.pr_storage = #{storage}
         </if>
         <if test="supplierId != NULL">
             AND p.s_id = #{supplierId}
