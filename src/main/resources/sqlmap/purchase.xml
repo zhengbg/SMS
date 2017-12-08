@@ -20,17 +20,17 @@
         <result column="pt_name" property="productTypeName"/>
         <result column="pr_last_update_time" property="lastUpdateTime"/>
         <result column="pr_storage" property="storage"/>
-        <result column="pr_address" property="address"/>
-        <result column="pr_phone" property="phone"/>
-        <result column="pr_email" property="email"/>
+        <result column="s_address" property="address"/>
+        <result column="s_phone" property="phone"/>
+        <result column="s_email" property="email"/>
     </resultMap>
 
     <!-- 新增采购记录 -->
     <insert id="addPurchase" parameterType="PurchaseDo">
         INSERT INTO t_purchase_record
-        (p_id,u_id,pr_price,pr_amount,pr_memo,pr_create_time,pr_last_update_time,pr_storage,pr_address,pr_phone,pr_email)
+        (p_id,u_id,pr_price,pr_amount,pr_memo,pr_create_time,pr_last_update_time,pr_storage)
         VALUES
-        (#{productId},#{employeeId},#{price},#{amount},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),1,#{address},#{phone},#{email})
+        (#{productId},#{employeeId},#{price},#{amount},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),1)
     </insert>
 
     <!-- 批量删除采购记录 -->
@@ -55,7 +55,7 @@
 
     <!-- 查询采购记录 -->
     <select id="queryPurchase" parameterType="Map" resultMap="PurchaseMap">
-        SELECT pr.*, p.p_name,p.s_id,s.s_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
+        SELECT pr.*, p.p_name,p.s_id,s.s_supplier,p.pt_id,pt.pt_name,u.u_name,s.s_address,s.s_phone,s.s_email FROM t_purchase_record pr
         LEFT JOIN t_product p ON p.p_id = pr.p_id
         LEFT JOIN t_supplier s ON s.s_id = p.s_id
         LEFT JOIN t_product_type pt ON pt.pt_id = p.pt_id
@@ -156,7 +156,7 @@
 
     <!-- 根据id查商品 -->
     <select id="getPurchase" parameterType="String" resultMap="PurchaseMap">
-        SELECT pr.*, p.p_name,p.s_id,s.s_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
+        SELECT pr.*, p.p_name,p.s_id,s.s_supplier,p.pt_id,pt.pt_name,u.u_name,s.s_address,s.s_phone,s.s_email FROM t_purchase_record pr
         LEFT JOIN t_product p ON p.p_id = pr.p_id
         LEFT JOIN t_supplier s ON s.s_id = p.s_id
         LEFT JOIN t_product_type pt ON pt.pt_id = p.pt_id

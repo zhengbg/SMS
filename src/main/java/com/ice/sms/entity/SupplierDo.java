@@ -33,4 +33,8 @@ public class SupplierDo implements Serializable
 	private String supplier;
 	private String createTime;
 	private String lastUpdateTime;
+	private String address;
+	private String phone;
+	private String email;
+	private String memo;
 }

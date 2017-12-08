@@ -158,6 +158,22 @@ public class SupplierServiceImpl implements SupplierService
 		{
 			params.put ("supplier", updateSupplierRequest.getSupplier ());
 		}
+		if (! StringUtils.isEmpty (updateSupplierRequest.getAddress ()))
+		{
+			params.put ("address", updateSupplierRequest.getAddress ());
+		}
+		if (! StringUtils.isEmpty (updateSupplierRequest.getPhone ()))
+		{
+			params.put ("phone", updateSupplierRequest.getPhone ());
+		}
+		if (! StringUtils.isEmpty (updateSupplierRequest.getEmail ()))
+		{
+			params.put ("email", updateSupplierRequest.getEmail ());
+		}
+		if (! StringUtils.isEmpty (updateSupplierRequest.getMemo ()))
+		{
+			params.put ("memo", updateSupplierRequest.getMemo ());
+		}
 		params.put ("supplierId", updateSupplierRequest.getSupplierId ());
 		params.put ("lastUpdateTime", updateSupplierRequest.getLastUpdateTime ());
 
@@ -308,6 +324,10 @@ public class SupplierServiceImpl implements SupplierService
 	{
 		SupplierDo supplierDo = new SupplierDo ();
 		supplierDo.setSupplier (supplierVo.getSupplier ());
+		supplierDo.setPhone (supplierVo.getPhone ());
+		supplierDo.setAddress (supplierVo.getAddress ());
+		supplierDo.setEmail (supplierVo.getEmail ());
+		supplierDo.setMemo (supplierVo.getMemo ());
 
 		return supplierDo;
 	}
@@ -319,6 +339,10 @@ public class SupplierServiceImpl implements SupplierService
 		supplierVo.setSupplier (supplierDo.getSupplier ());
 		supplierVo.setCreateTime (supplierDo.getCreateTime ());
 		supplierVo.setLastUpdateTime (supplierDo.getLastUpdateTime ());
+		supplierVo.setPhone (supplierDo.getPhone ());
+		supplierVo.setAddress (supplierDo.getAddress ());
+		supplierVo.setEmail (supplierDo.getEmail ());
+		supplierVo.setMemo (supplierDo.getMemo ());
 
 		return supplierVo;
 	}

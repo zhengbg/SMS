@@ -32,4 +32,8 @@ public class UpdateSupplierRequest implements Serializable
 	private Integer supplierId;
 	private String supplier;
 	private String lastUpdateTime;
+	private String address;
+	private String phone;
+	private String email;
+	private String memo;
 }

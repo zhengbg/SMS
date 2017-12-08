@@ -9,14 +9,18 @@
         <result column="s_supplier" property="supplier"/>
         <result column="s_create_time" property="createTime"/>
         <result column="s_last_update_time" property="lastUpdateTime"/>
+        <result column="s_address" property="address"/>
+        <result column="s_phone" property="phone"/>
+        <result column="s_email" property="email"/>
+        <result column="memo" property="memo"/>
     </resultMap>
 
     <!-- 增加供应商 -->
     <insert id="addSupplier" parameterType="SupplierDo">
         INSERT INTO t_supplier
-        (s_supplier,s_create_time,s_last_update_time)
+        (s_supplier,s_create_time,s_last_update_time,s_address,s_phone,s_email,memo)
         VALUES
-        (#{supplier},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+        (#{supplier},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),#{address},#{phone},#{email},#{memo})
     </insert>
 
     <!-- 批量删除供应商 -->
@@ -31,6 +35,18 @@
     <update id="updateSupplier" parameterType="Map">
         UPDATE t_supplier
         <set>
+            <if test="address != null">
+                s_address = #{address},
+            </if>
+            <if test="phone != null">
+                s_phone = #{phone},
+            </if>
+            <if test="email != null">
+                s_email = #{email},
+            </if>
+            <if test="memo != null">
+                memo = #{memo},
+            </if>
             <if test="supplier != null">
                 s_supplier = #{supplier},
             </if>
