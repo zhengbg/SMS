@@ -85,8 +85,8 @@
     <!-- 查询商品 -->
     <select id="queryProduct" parameterType="Map" resultMap="ProductMap">
         SELECT p.*,pt.pt_name,s.s_supplier FROM t_product p
-        INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
-        INNER JOIN t_supplier s ON s.s_id = p.s_id
+        LEFT JOIN t_product_type pt ON p.pt_id = pt.pt_id
+        LEFT JOIN t_supplier s ON s.s_id = p.s_id
         WHERE 1=1
         <if test="productId != NULL">
             AND p.p_id = #{productId}
@@ -141,8 +141,8 @@
     <!-- 查询商品 -->
     <select id="countProduct" parameterType="Map" resultType="int">
         SELECT COUNT(1) FROM t_product p
-        INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
-        INNER JOIN t_supplier s ON s.s_id = p.s_id
+        LEFT JOIN t_product_type pt ON p.pt_id = pt.pt_id
+        LEFT JOIN t_supplier s ON s.s_id = p.s_id
         WHERE 1=1
         <if test="productId != NULL">
             AND p.p_id = #{productId}
@@ -194,8 +194,8 @@
     <!-- 根据id查商品 -->
     <select id="getProduct" parameterType="String" resultMap="ProductMap">
          SELECT p.*,pt.pt_name,s.s_supplier FROM t_product p
-         INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
-         INNER JOIN t_supplier s ON s.s_id = p.s_id
+         LEFT JOIN t_product_type pt ON p.pt_id = pt.pt_id
+         LEFT JOIN t_supplier s ON s.s_id = p.s_id
          WHERE p.p_id = #{productId}
     </select>
 </mapper>

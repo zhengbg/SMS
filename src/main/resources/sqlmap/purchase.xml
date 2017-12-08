@@ -39,9 +39,9 @@
     <!-- 查询采购记录 -->
     <select id="queryPurchase" parameterType="Map" resultMap="PurchaseMap">
         SELECT pr.*, p.p_name,p.s_id,s.s_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
-        INNER JOIN t_product p ON p.p_id = pr.p_id
-        INNER JOIN t_supplier s ON s.s_id = p.s_id
-        INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
+        LEFT JOIN t_product p ON p.p_id = pr.p_id
+        LEFT JOIN t_supplier s ON s.s_id = p.s_id
+        LEFT JOIN t_product_type pt ON pt.pt_id = p.pt_id
         INNER JOIN t_user u ON u.u_id = pr.u_id
         WHERE 1=1
         <if test="productName != NULL">
@@ -69,13 +69,13 @@
             AND u.u_name LIKE concat('%',#{employeeName},'%')
         </if>
         <if test="createTime != NULL">
-            AND pr.p_create_time = #{createTime}
+            AND pr.pr_create_time = #{createTime}
         </if>
         <if test="minCreateTime != NULL">
-            <![CDATA[ AND pr.p_create_time >= #{minCreateTime} ]]>
+            <![CDATA[ AND pr.pr_create_time >= #{minCreateTime} ]]>
         </if>
         <if test="maxCreateTime != NULL">
-            <![CDATA[ AND pr.p_create_time <= #{maxCreateTime} ]]>
+            <![CDATA[ AND pr.pr_create_time <= #{maxCreateTime} ]]>
         </if>
         <if test="purchaseId != NULL">
             AND pr.pr_id = #{purchaseId}
@@ -88,9 +88,9 @@
     <!-- 查询商品 -->
     <select id="countPurchase" parameterType="Map" resultType="int">
         SELECT COUNT(1) FROM t_purchase_record pr
-        INNER JOIN t_product p ON p.p_id = pr.p_id
-        INNER JOIN t_supplier s ON s.s_id = p.s_id
-        INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
+        LEFT JOIN t_product p ON p.p_id = pr.p_id
+        LEFT JOIN t_supplier s ON s.s_id = p.s_id
+        LEFT JOIN t_product_type pt ON pt.pt_id = p.pt_id
         INNER JOIN t_user u ON u.u_id = pr.u_id
         WHERE 1=1
         <if test="productName != NULL">
@@ -118,13 +118,13 @@
             AND u.u_name LIKE concat('%',#{employeeName},'%')
         </if>
         <if test="createTime != NULL">
-            AND pr.p_create_time = #{createTime}
+            AND pr.pr_create_time = #{createTime}
         </if>
         <if test="minCreateTime != NULL">
-            <![CDATA[ AND pr.p_create_time >= #{minCreateTime} ]]>
+            <![CDATA[ AND pr.pr_create_time >= #{minCreateTime} ]]>
         </if>
         <if test="maxCreateTime != NULL">
-            <![CDATA[ AND pr.p_create_time <= #{maxCreateTime} ]]>
+            <![CDATA[ AND pr.pr_create_time <= #{maxCreateTime} ]]>
         </if>
         <if test="purchaseId != NULL">
             AND pr.pr_id = #{purchaseId}
@@ -134,9 +134,9 @@
     <!-- 根据id查商品 -->
     <select id="getPurchase" parameterType="String" resultMap="PurchaseMap">
         SELECT pr.*, p.p_name,p.s_id,s.s_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
-        INNER JOIN t_product p ON p.p_id = pr.p_id
-        INNER JOIN t_supplier s ON s.s_id = p.s_id
-        INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
+        LEFT JOIN t_product p ON p.p_id = pr.p_id
+        LEFT JOIN t_supplier s ON s.s_id = p.s_id
+        LEFT JOIN t_product_type pt ON pt.pt_id = p.pt_id
         INNER JOIN t_user u ON u.u_id = pr.u_id
         WHERE pr.pr_id = #{purchaseId}
     </select>

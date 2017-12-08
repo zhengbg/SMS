@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ice.sms.dao.SupplierDao">
+    <!-- 供应商结果集 -->
+    <resultMap type="SupplierDo" id="SupplierMap">
+        <id column="s_id" property="supplierId"/>
+        <result column="s_supplier" property="supplier"/>
+        <result column="s_create_time" property="createTime"/>
+        <result column="s_last_update_time" property="lastUpdateTime"/>
+    </resultMap>
+
+    <!-- 增加供应商 -->
+    <insert id="addSupplier" parameterType="SupplierDo">
+        INSERT INTO t_supplier
+        (s_supplier,s_create_time,s_last_update_time)
+        VALUES
+        (#{supplier},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+    </insert>
+
+    <!-- 批量删除供应商 -->
+    <delete id="delSupplier" parameterType="List">
+        DELETE FROM t_supplier WHERE s_id IN
+        <foreach collection="list" item="supplierId" index="index" open="(" separator="," close=")">
+            #{supplierId}
+        </foreach>
+    </delete>
+
+    <!-- 修改供应商信息  -->
+    <update id="updateSupplier" parameterType="Map">
+        UPDATE t_supplier
+        <set>
+            <if test="supplier != null">
+                s_supplier = #{supplier},
+            </if>
+            s_last_update_time = DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+        </set>
+        WHERE s_id = #{supplierId} AND s_last_update_time = #{lastUpdateTime}
+    </update>
+
+    <!-- 查询供应商 -->
+    <select id="querySupplier" parameterType="Map" resultMap="SupplierMap">
+        SELECT * FROM t_supplier
+        WHERE 1=1
+        <if test="supplierId != NULL">
+            AND s_id = #{supplierId}
+        </if>
+        <if test="supplier != NULL">
+            AND s_supplier LIKE concat('%',#{supplier},'%')
+        </if>
+        <if test="createTime != NULL">
+            AND s_create_time = #{createTime}
+        </if>
+        <if test="lastUpdateTime != NULL">
+            AND s_last_update_time = #{lastUpdateTime}
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND s_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND s_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="minLastUpdateTime != NULL">
+            <![CDATA[ AND s_last_update_time >= #{minLastUpdateTime} ]]>
+        </if>
+        <if test="maxLastUpdateTime != NULL">
+            <![CDATA[ AND s_last_update_time <= #{maxLastUpdateTime} ]]>
+        </if>
+        <if test="start != NULL and psize != NULL ">
+            limit ${start}, ${psize}
+        </if>
+    </select>
+
+    <!-- 查询供应商总数 -->
+    <select id="countSupplier" parameterType="Map" resultType="int">
+        SELECT COUNT(1) FROM t_supplier
+        WHERE 1=1
+        <if test="supplierId != NULL">
+            AND s_id = #{supplierId}
+        </if>
+        <if test="supplier != NULL">
+            AND s_supplier LIKE concat('%',#{supplier},'%')
+        </if>
+        <if test="createTime != NULL">
+            AND s_create_time = #{createTime}
+        </if>
+        <if test="lastUpdateTime != NULL">
+            AND s_last_update_time = #{lastUpdateTime}
+        </if>
+        <if test="minCreateTime != NULL">
+            <![CDATA[ AND s_create_time >= #{minCreateTime} ]]>
+        </if>
+        <if test="maxCreateTime != NULL">
+            <![CDATA[ AND s_create_time <= #{maxCreateTime} ]]>
+        </if>
+        <if test="minLastUpdateTime != NULL">
+            <![CDATA[ AND s_last_update_time >= #{minLastUpdateTime} ]]>
+        </if>
+        <if test="maxLastUpdateTime != NULL">
+            <![CDATA[ AND s_last_update_time <= #{maxLastUpdateTime} ]]>
+        </if>
+    </select>
+
+    <!-- 根据id查询供应商信息 -->
+    <select id="getSupplier" parameterType="Integer" resultMap="SupplierMap">
+        SELECT * FROM t_supplier WHERE s_id = #{supplierId}
+    </select>
+</mapper>
