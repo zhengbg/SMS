@@ -173,6 +173,10 @@ public class PurchaseServiceImpl implements PurchaseService
 		{
 			params.put ("supplier", queryPurchaseRequest.getSupplier ());
 		}
+		if (null != queryPurchaseRequest.getSupplierId ())
+		{
+			params.put ("supplier", queryPurchaseRequest.getSupplierId ());
+		}
 		if (null != queryPurchaseRequest.getProductTypeId ())
 		{
 			params.put ("productTypeId", queryPurchaseRequest.getProductTypeId ());
@@ -316,6 +320,7 @@ public class PurchaseServiceImpl implements PurchaseService
 		purchaseVo.setEmployeeName (purchaseDo.getEmployeeName ());
 		purchaseVo.setProductTypeId (purchaseDo.getProductTypeId ());
 		purchaseVo.setProductTypeName (purchaseDo.getProductTypeName ());
+		purchaseVo.setSupplierId (purchaseDo.getSupplierId ());
 
 		return purchaseVo;
 	}

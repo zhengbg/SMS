@@ -39,4 +39,5 @@ public class QueryPurchaseRequest extends RequestInfo
 	private String minCreateTime;
 	private String maxCreateTime;
 	private Integer purchaseId;
+	private Integer supplierId;
 }

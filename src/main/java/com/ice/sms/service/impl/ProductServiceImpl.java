@@ -205,9 +205,9 @@ public class ProductServiceImpl implements ProductService
 		{
 			params.put ("price", updateProductRequest.getPrice ());
 		}
-		if (! StringUtils.isEmpty (updateProductRequest.getSupplier ()))
+		if (null != updateProductRequest.getSupplierId ())
 		{
-			params.put ("supplier", updateProductRequest.getSupplier ());
+			params.put ("supplierId", updateProductRequest.getSupplierId ());
 		}
 		if (null != updateProductRequest.getProductTypeId ())
 		{
@@ -262,6 +262,10 @@ public class ProductServiceImpl implements ProductService
 		if (! StringUtils.isEmpty (queryProductRequest.getSupplier ()))
 		{
 			params.put ("supplier", queryProductRequest.getSupplier ());
+		}
+		if (null != queryProductRequest.getSupplierId ())
+		{
+			params.put ("supplierId", queryProductRequest.getSupplierId ());
 		}
 		if (null != queryProductRequest.getProductTypeId ())
 		{
@@ -394,10 +398,10 @@ public class ProductServiceImpl implements ProductService
 		productDo.setProductName (productVo.getProductName ());
 		productDo.setProductScale (productVo.getProductScale ());
 		productDo.setPrice (productVo.getPrice ());
-		productDo.setSupplier (productVo.getSupplier ());
 		productDo.setStock (productVo.getStock ());
 		productDo.setProductTypeId (productVo.getProductTypeId ());
 		productDo.setMemo (productVo.getMemo ());
+		productDo.setSupplierId (productVo.getSupplierId ());
 		return productDo;
 	}
 
@@ -415,6 +419,7 @@ public class ProductServiceImpl implements ProductService
 		productVo.setCreateTime (productDo.getCreateTime ());
 		productVo.setLastUpdateTime (productDo.getLastUpdateTime ());
 		productVo.setProductTypeName (productDo.getProductTypeName ());
+		productVo.setSupplierId (productDo.getSupplierId ());
 		return productVo;
 	}
 

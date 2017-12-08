@@ -42,4 +42,5 @@ public class PurchaseVo implements Serializable
 	private String employeeName;
 	private Integer productTypeId;
 	private String productTypeName;
+	private Integer supplierId;
 }

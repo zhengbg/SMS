@@ -41,4 +41,5 @@ public class ProductDo implements Serializable
 	private String createTime;
 	private String lastUpdateTime;
 	private String productTypeName;
+	private Integer supplierId;
 }

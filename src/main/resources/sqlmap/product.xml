@@ -9,7 +9,8 @@
         <result column="p_name" property="productName"/>
         <result column="p_scale" property="productScale"/>
         <result column="p_price" property="price"/>
-        <result column="p_supplier" property="supplier"/>
+        <result column="s_supplier" property="supplier"/>
+        <result column="s_id" property="supplierId"/>
         <result column="p_stock" property="stock"/>
         <result column="pt_id" property="productTypeId"/>
         <result column="p_memo" property="memo"/>
@@ -21,9 +22,9 @@
     <!-- 新增商品 -->
     <insert id="addProduct" parameterType="ProductDo">
         INSERT INTO t_product
-        (p_id,p_name,p_scale,p_price,p_supplier,p_stock,pt_id,p_memo,p_create_time,p_last_update_time)
+        (p_id,p_name,p_scale,p_price,s_id,p_stock,pt_id,p_memo,p_create_time,p_last_update_time)
         VALUES
-        (#{productId},#{productName},#{productScale},#{price},#{supplier},#{stock},#{productTypeId},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
+        (#{productId},#{productName},#{productScale},#{price},#{supplierId},#{stock},#{productTypeId},#{memo},DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'))
     </insert>
 
     <!-- 批量删除商品 -->
@@ -47,8 +48,8 @@
             <if test="price != null">
                 p_price = #{price},
             </if>
-            <if test="supplier != null">
-                p_supplier = #{supplier},
+            <if test="supplierId != null">
+                s_id = #{supplierId},
             </if>
             <if test="productTypeId != null">
                 pt_id = #{productTypeId},
@@ -83,7 +84,9 @@
 
     <!-- 查询商品 -->
     <select id="queryProduct" parameterType="Map" resultMap="ProductMap">
-        SELECT p.*,pt.pt_name FROM t_product p INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
+        SELECT p.*,pt.pt_name,s.s_supplier FROM t_product p
+        INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
+        INNER JOIN t_supplier s ON s.s_id = p.s_id
         WHERE 1=1
         <if test="productId != NULL">
             AND p.p_id = #{productId}
@@ -91,8 +94,11 @@
         <if test="productName != NULL">
             AND p.p_name LIKE concat('%',#{productName},'%')
         </if>
+        <if test="supplierId != NULL">
+            AND p.s_id = #{supplierId}
+        </if>
         <if test="supplier != NULL">
-            AND p.p_supplier LIKE concat('%',#{supplier},'%')
+            AND s.s_supplier LIKE concat('%',#{supplier},'%')
         </if>
         <if test="productTypeId != NULL">
             AND p.pt_id = #{productTypeId}
@@ -134,7 +140,9 @@
 
     <!-- 查询商品 -->
     <select id="countProduct" parameterType="Map" resultType="int">
-        SELECT COUNT(1) FROM t_product p INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
+        SELECT COUNT(1) FROM t_product p
+        INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
+        INNER JOIN t_supplier s ON s.s_id = p.s_id
         WHERE 1=1
         <if test="productId != NULL">
             AND p.p_id = #{productId}
@@ -142,8 +150,11 @@
         <if test="productName != NULL">
             AND p.p_name LIKE concat('%',#{productName},'%')
         </if>
+        <if test="supplierId != NULL">
+            AND p.s_id = #{supplierId}
+        </if>
         <if test="supplier != NULL">
-            AND p.p_supplier LIKE concat('%',#{supplier},'%')
+            AND s.s_supplier LIKE concat('%',#{supplier},'%')
         </if>
         <if test="productTypeId != NULL">
             AND p.pt_id = #{productTypeId}
@@ -182,7 +193,9 @@
 
     <!-- 根据id查商品 -->
     <select id="getProduct" parameterType="String" resultMap="ProductMap">
-         SELECT p.*,pt.pt_name FROM t_product p INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
-        WHERE p.p_id = #{productId}
+         SELECT p.*,pt.pt_name,s.s_supplier FROM t_product p
+         INNER JOIN t_product_type pt ON p.pt_id = pt.pt_id
+         INNER JOIN t_supplier s ON s.s_id = p.s_id
+         WHERE p.p_id = #{productId}
     </select>
 </mapper>

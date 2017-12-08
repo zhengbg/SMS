@@ -13,7 +13,8 @@
         <result column="pr_memo" property="memo"/>
         <result column="pr_create_time" property="createTime"/>
         <result column="p_name" property="productName"/>
-        <result column="p_supplier" property="supplier"/>
+        <result column="s_supplier" property="supplier"/>
+        <result column="s_id" property="supplierId"/>
         <result column="u_name" property="employeeName"/>
         <result column="pt_id" property="productTypeId"/>
         <result column="pt_name" property="productTypeName"/>
@@ -37,16 +38,20 @@
 
     <!-- 查询采购记录 -->
     <select id="queryPurchase" parameterType="Map" resultMap="PurchaseMap">
-        SELECT pr.*, p.p_name,p.p_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
+        SELECT pr.*, p.p_name,p.s_id,s.s_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
         INNER JOIN t_product p ON p.p_id = pr.p_id
+        INNER JOIN t_supplier s ON s.s_id = p.s_id
         INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
         INNER JOIN t_user u ON u.u_id = pr.u_id
         WHERE 1=1
         <if test="productName != NULL">
             AND p.p_name LIKE concat('%',#{productName},'%')
         </if>
+        <if test="supplierId != NULL">
+            AND p.s_id = #{supplierId}
+        </if>
         <if test="supplier != NULL">
-            AND p.p_supplier LIKE concat('%',#{supplier},'%')
+            AND s.s_supplier LIKE concat('%',#{supplier},'%')
         </if>
         <if test="productTypeId != NULL">
             AND p.pt_id = #{productTypeId}
@@ -84,14 +89,18 @@
     <select id="countPurchase" parameterType="Map" resultType="int">
         SELECT COUNT(1) FROM t_purchase_record pr
         INNER JOIN t_product p ON p.p_id = pr.p_id
+        INNER JOIN t_supplier s ON s.s_id = p.s_id
         INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
         INNER JOIN t_user u ON u.u_id = pr.u_id
         WHERE 1=1
         <if test="productName != NULL">
             AND p.p_name LIKE concat('%',#{productName},'%')
         </if>
+        <if test="supplierId != NULL">
+            AND p.s_id = #{supplierId}
+        </if>
         <if test="supplier != NULL">
-            AND p.p_supplier LIKE concat('%',#{supplier},'%')
+            AND s.s_supplier LIKE concat('%',#{supplier},'%')
         </if>
         <if test="productTypeId != NULL">
             AND p.pt_id = #{productTypeId}
@@ -124,8 +133,9 @@
 
     <!-- 根据id查商品 -->
     <select id="getPurchase" parameterType="String" resultMap="PurchaseMap">
-        SELECT pr.*, p.p_name,p.p_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
+        SELECT pr.*, p.p_name,p.s_id,s.s_supplier,p.pt_id,pt.pt_name,u.u_name FROM t_purchase_record pr
         INNER JOIN t_product p ON p.p_id = pr.p_id
+        INNER JOIN t_supplier s ON s.s_id = p.s_id
         INNER JOIN t_product_type pt ON pt.pt_id = p.pt_id
         INNER JOIN t_user u ON u.u_id = pr.u_id
         WHERE pr.pr_id = #{purchaseId}

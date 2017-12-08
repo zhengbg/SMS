@@ -30,6 +30,7 @@ public class QueryProductRequest extends RequestInfo
 {
 	private String productId;
 	private String productName;
+	private Integer supplierId;
 	private String supplier;
 	private Integer productTypeId;
 	private String productTypeName;

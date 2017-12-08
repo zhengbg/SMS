@@ -34,7 +34,7 @@ public class UpdateProductRequest implements Serializable
 	private String productName;
 	private String productScale;
 	private BigDecimal price;
-	private String supplier;
+	private Integer supplierId;
 	private Integer productTypeId;
 	private String memo;
 	private String lastUpdateTime;
