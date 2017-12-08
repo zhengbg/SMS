@@ -140,15 +140,15 @@ function paintData(data) {
         html = html + "<td><input name='checkBox' value=\""+purchase.purchaseId+"\" type=\"checkbox\" /></td>";
         html = html + "<td>"+(i + 1)+"</td>";
         html = html + "<td>" + purchase.productId + "</td>";
-        html = html + "<td><a href=\"#\">" + purchase.productName + "</a></td>";
-        html = html + "<td>" + purchase.productTypeName + "</td>";
+        html = html + "<td><a href=\"#\">" + (purchase.productName==null?"":purchase.productName) + "</a></td>";
+        html = html + "<td>" + (purchase.productTypeName==null?"":purchase.productTypeName)+ "</td>";
         html = html + "<td>" + purchase.employeeName + "</td>";
         html = html + "<td>" + purchase.price + "</td>";
         html = html + "<td>" + purchase.amount + "</td>";
         html = html + "<td>" + purchase.createTime + "</td>";
         html = html + "<td><div class=\"am-btn-group am-btn-group-xs\"><div class=\"am-btn-group am-btn-group-xs\">";
-        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-secondary\" onclick=\"editPurchase('"+purchase.purchaseId+"')\"><span class=\"am-icon-pencil-square-vo\"></span> 编辑</span>";
-        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\" onclick=\"delPurchase('"+purchase.purchaseId+"')\"><span class=\"am-icon-trash-vo\"></span> 删除</span>";
+        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-secondary\" onclick=\"editPurchase('"+purchase.purchaseId+"')\"><span class=\"am-icon-pencil-square-o\"></span> 编辑</span>";
+        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\" onclick=\"delPurchase('"+purchase.purchaseId+"')\"><span class=\"am-icon-trash-o\"></span> 删除</span>";
         html = html + "</div></div></td>";
         html = html + "</tr>";
     }

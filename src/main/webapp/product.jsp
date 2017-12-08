@@ -54,17 +54,20 @@
         <div class="am-offcanvas-bar admin-offcanvas-bar">
             <ul class="am-list admin-sidebar-list">
                 <li class="admin-parent">
-                    <a class="am-cf" data-am-collapse="{target: '#security-nav'}"><span
-                            class="am-icon-users am-icon-fw"></span> 用户管理<span
-                            class="am-icon-angle-right am-fr am-margin-right"></span></a>
-                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="security-nav">
-                        <li><a href="employee.jsp" class="am-cf"><span class="am-icon-male am-icon-fw"></span> 员工管理<span
-                                class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
-                        <li><a href="member.jsp" class="am-cf"><span class="am-icon-flag am-icon-fw"></span> 会员管理<span
-                                class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+                    <a class="am-cf" data-am-collapse="{target: '#person-nav'}"><span class="am-icon-users am-icon-fw"></span> 人事管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="person-nav">
+                        <li><a href="employee.jsp" class="am-cf"><span class="am-icon-male am-icon-fw"></span> 员工管理</a></li>
+                        <li><a href="member.jsp" class="am-cf"><span class="am-icon-flag am-icon-fw"></span> 会员管理</a></li>
+                        <li><a href="supplier.jsp" class="am-cf"><span class="am-icon-user am-icon-fw"></span> 供应商管理</a></li>
                     </ul>
                 </li>
-                <li><a href="product.jsp"><span class="am-icon-building am-icon-fw"></span>商品管理</a></li>
+                <li class="admin-parent">
+                    <a class="am-cf" data-am-collapse="{target: '#product-nav'}"><span class="am-icon-university am-icon-fw"></span> 商品管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="product-nav">
+                        <li><a href="product.jsp" class="am-cf"><span class="am-icon-tasks am-icon-fw"></span> 库存管理</a></li>
+                        <li><a href="productType.jsp" class="am-cf"><span class="am-icon-sort am-icon-fw"></span> 分类管理</a></li>
+                    </ul>
+                </li>
                 <li><a href="purchase.jsp"><span class="am-icon-shopping-basket am-icon-fw"></span>采购管理</a></li>
                 <li><a href="#"><span class="am-icon-sellsy am-icon-fw"></span>销售管理</a></li>
             </ul>
@@ -95,7 +98,7 @@
                 <div class="am-u-sm-12 am-u-md-3" style="width: 30%;height: 50px;">
                     <div class="am-form-group">
                         <label for="type-list" class="am-form-label search-label">商品类型:&nbsp;&nbsp; </label>
-                        <select id="type-list" data-am-selected="{btnSize: 'sm'}">
+                        <select id="type-list" data-am-selected="{btnSize: 'sm',maxHeight: 100}">
                         </select>
                     </div>
                 </div>
@@ -111,10 +114,11 @@
                         <input type="text" id="productName" class="am-form-field search-input">
                     </div>
                 </div>
-                <div class="am-u-sm-12 am-u-md-3" style="width: 30%;">
+                <div class="am-u-sm-12 am-u-md-3" style="width: 30%;height: 50px;">
                     <div class="am-form-group">
-                        <label for="supplier" class="am-form-label search-label" style="float: left;">供应商:&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</label>
-                        <input type="text" id="supplier" class="am-form-field search-input">
+                        <label for="supplier-list" class="am-form-label search-label">供应商:&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;  </label>
+                        <select id="supplier-list" data-am-selected="{btnSize: 'sm',maxHeight: 100}">
+                        </select>
                     </div>
                 </div>
                 <div class="am-u-sm-12 am-u-md-3" style="width: 30%;">

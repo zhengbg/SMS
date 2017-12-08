@@ -49,13 +49,20 @@
         <div class="am-offcanvas-bar admin-offcanvas-bar">
             <ul class="am-list admin-sidebar-list">
                 <li class="admin-parent">
-                    <a class="am-cf" data-am-collapse="{target: '#security-nav'}"><span class="am-icon-users am-icon-fw"></span> 用户管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
-                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="security-nav">
-                        <li><a href="employee.jsp" class="am-cf"><span class="am-icon-male am-icon-fw"></span> 员工管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
-                        <li><a href="member.jsp" class="am-cf"><span class="am-icon-flag am-icon-fw"></span> 会员管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+                    <a class="am-cf" data-am-collapse="{target: '#person-nav'}"><span class="am-icon-users am-icon-fw"></span> 人事管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="person-nav">
+                        <li><a href="employee.jsp" class="am-cf"><span class="am-icon-male am-icon-fw"></span> 员工管理</a></li>
+                        <li><a href="member.jsp" class="am-cf"><span class="am-icon-flag am-icon-fw"></span> 会员管理</a></li>
+                        <li><a href="supplier.jsp" class="am-cf"><span class="am-icon-user am-icon-fw"></span> 供应商管理</a></li>
                     </ul>
                 </li>
-                <li><a href="product.jsp"><span class="am-icon-building am-icon-fw"></span>商品管理</a></li>
+                <li class="admin-parent">
+                    <a class="am-cf" data-am-collapse="{target: '#product-nav'}"><span class="am-icon-university am-icon-fw"></span> 商品管理<span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="product-nav">
+                        <li><a href="product.jsp" class="am-cf"><span class="am-icon-tasks am-icon-fw"></span> 库存管理</a></li>
+                        <li><a href="productType.jsp" class="am-cf"><span class="am-icon-sort am-icon-fw"></span> 分类管理</a></li>
+                    </ul>
+                </li>
                 <li><a href="purchase.jsp"><span class="am-icon-shopping-basket am-icon-fw"></span>采购管理</a></li>
                 <li><a href="#"><span class="am-icon-sellsy am-icon-fw"></span>销售管理</a></li>
             </ul>

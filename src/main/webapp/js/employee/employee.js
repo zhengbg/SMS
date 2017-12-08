@@ -88,8 +88,8 @@ function paintData(data) {
         html = html + "<td><a href=\"#\">" + user.phone + "</a></td>";
         html = html + "<td>" + (user.locked == '0' ? '正常' : '锁定') + "</td>";
         html = html + "<td><div class=\"am-btn-group am-btn-group-xs\"><div class=\"am-btn-group am-btn-group-xs\">";
-        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-secondary\" onclick=\"editUser('"+user.userId+"')\"><span class=\"am-icon-pencil-square-vo\"></span> 编辑</span>";
-        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\" onclick=\"delUser('"+user.userId+"')\"><span class=\"am-icon-trash-vo\"></span> 删除</span>";
+        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-secondary\" onclick=\"editUser('"+user.userId+"')\"><span class=\"am-icon-pencil-square-o\"></span> 编辑</span>";
+        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\" onclick=\"delUser('"+user.userId+"')\"><span class=\"am-icon-trash-o\"></span> 删除</span>";
         html = html + "</div></div></td>";
         html = html + "</tr>";
     }

@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService
 		}
 		if (! StringUtils.isEmpty (req.getType ()))
 		{
-			params.put ("type", req.getUserName ());
+			params.put ("type", req.getType ());
 		}
 		if (! StringUtils.isEmpty (req.getPageIndex ()))
 		{

@@ -78,94 +78,57 @@
     </div>
     <!-- sidebar end
 
-     <!-- content start -->
+    <!-- content start -->
     <div class="admin-content">
         <div class="admin-content-body">
             <div class="am-cf am-padding am-padding-bottom-0">
-                <div class="am-fl am-cf">
-                    <strong class="am-text-primary am-text-lg">商品管理</strong> /
-                    <small>新增</small>
-                </div>
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">商品管理</strong> >><small>分类管理</small></div>
             </div>
 
             <hr>
 
-            <div class="am-tabs am-margin" data-am-tabs>
-                <ul class="am-tabs-nav am-nav am-nav-tabs">
-                    <li class="am-active"><a href="#tab1">基本信息</a></li>
-                </ul>
-
-                <div class="am-tabs-bd">
-                    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                商品编号
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="productId" class="am-input-sm" style = "width:200px;height:32px;"> *必填
-                            </div>
+            <div class="am-g">
+                <div class="am-u-sm-12 am-u-md-6">
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <button type="button" id="type-plus" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
+                            <button type="button" id="batch-delete" class="am-btn am-btn-dan"><span class="am-icon-trash-o"></span> 删除</button>
                         </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                商品名称
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="productName" class="am-input-sm" style = "width:200px;height:32px;">
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">商品类型</div>
-                            <div class="am-u-sm-8 am-u-md-10">
-                                <select id = "type-list"  data-am-selected="{maxHeight: 100}">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                规格
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="scale" class="am-input-sm" style = "width:200px;height:32px;">
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                单价
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="price" class="am-input-sm" style = "width:200px;height:32px;">
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                数量
-                            </div>
-                            <div class="am-u-sm-8 am-u-md-4" style = "float:left;">
-                                <input type="text" id="stock" class="am-input-sm" style = "width:200px;height:32px;">
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">供应商</div>
-                            <div class="am-u-sm-8 am-u-md-10">
-                                <select id = "supplier-list"  data-am-selected="{maxHeight: 100}">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-g am-margin-top-sm">
-                            <div class="am-u-sm-4 am-u-md-2 am-text-right">
-                                新增描述
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-10">
-                                <textarea rows="5" id="memo" cols="30" placeholder="请输入..."></textarea>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div class="am-u-sm-12 am-u-md-3">
+                    <div class="am-input-group am-input-group-sm">
+                        <input type="text" placeholder="分类名称..." id="search-type" class="am-form-field">
+					  <span class="am-input-group-btn">
+						<button class="am-btn am-btn-default" id="search-btn" type="button">搜索</button>
+					  </span>
                     </div>
                 </div>
             </div>
 
-            <div class="am-margin">
-                <button type="button" id="pro-save" class="am-btn am-btn-primary am-btn-xs">保存</button>
-                <button type="button" id="pro-cancel" class="am-btn am-btn-primary am-btn-xs">取消</button>
+            <div class="am-g">
+                <div class="am-u-sm-12">
+                    <form class="am-form">
+                        <table class="am-table am-table-striped am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <th class="table-check"><input name="selectall" type="checkbox" /></th><th>ID</th><th>分类名称</th><th>描述</th><th>创建时间</th><th class="table-set">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="product-type-list">
+
+                            </tbody>
+                        </table>
+                        <div class="am-cf">
+                            <div class="am-fr">
+                                <div value="1 0"></div>
+                                <div id="page" class="page_div"></div>
+                            </div>
+                        </div>
+                        <hr />
+                    </form>
+                </div>
+
             </div>
         </div>
 
@@ -173,14 +136,34 @@
             <hr>
             <p class="am-padding-left">© 2017 AMS For Development.Licensed under QT license.</p>
         </footer>
+
     </div>
     <!-- content end -->
+</div>
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">添加商品分类</div>
+        <div class="am-modal-bd">
+            <div class="am-form-group" style="margin-top: 10px;">
+                <label for="productTypeName" class="am-form-label search-label" style="float: left; margin-left: 100px;">分类名称: &nbsp;&nbsp;</label>
+                <input type="text" id="productTypeName" class="am-form-field search-input">
+            </div>
+            <div class="am-form-group" style="margin-top: 10px;">
+                <label for="memo" class="am-form-label search-label" style="float: left; margin-left: 100px;">分类描述: &nbsp;&nbsp;</label>
+                <input type="text" id="memo" class="am-form-field search-input">
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+        </div>
+    </div>
 </div>
 <script src="js/jquery.min.js"></script>
 <script src="js/amazeui.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/page.js"></script>
 <script src="js/common.js"></script>
-<script src="js/product/product-add.js"></script>
+<script src="js/product/product-type.js"></script>
 </body>
 </html>

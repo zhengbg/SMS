@@ -86,7 +86,7 @@ function paintData(data){
         html = html + "<td>" + member.address + "</td>";
         html = html + "<td>" + member.balance + "</td>";
         html = html + "<td><div class=\"am-btn-group am-btn-group-xs\"><div class=\"am-btn-group am-btn-group-xs\">";
-        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-secondary\" onclick=\"editMember('"+member.memberId+"')\"><span class=\"am-icon-pencil-square-vo\"></span> 编辑</span>";
+        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-secondary\" onclick=\"editMember('"+member.memberId+"')\"><span class=\"am-icon-pencil-square-o\"></span> 编辑</span>";
         html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\" onclick=\"delMember('"+member.memberId+"')\"><span class=\"am-icon-trash-o\"></span> 删除</span>";
         html = html + "</div></div></td>";
         html = html + "</tr>";

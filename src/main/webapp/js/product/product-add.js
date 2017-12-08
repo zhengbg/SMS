@@ -15,7 +15,7 @@ function addProduct() {
     var scale = $("#scale").val();
     var price = $("#price").val();
     var stock = $("#stock").val();
-    var supplier = $("#supplier").val();
+    var supplierId = $("#supplier-list :selected").val();
     var memo = $("#memo").val();
     if(!!!productId){
         alert("商品编号不能为空");
@@ -41,8 +41,8 @@ function addProduct() {
         alert("商品数量不能为空");
         return;
     }
-    if(!!!supplier){
-        alert("商品所属供应商不能为空");
+    if(supplierId == -1){
+        alert("请选择供应商");
         return;
     }
     var data = {
@@ -52,7 +52,7 @@ function addProduct() {
             "productTypeId":productTypeId,
             "productScale":scale,
             "price":price,
-            "supplier":supplier,
+            "supplierId":supplierId,
             "stock":stock,
             "memo":memo
         }
@@ -97,6 +97,33 @@ function initTypeList() {
             alert("network error!");
         })
 }
+function initSupplierList(){
+    ajaxUtil.doPostAjax('/supplier/querySupplier',{},
+        function (data) {
+            if(data.resultCode != '000000'){
+                alert(data.resultDesc);
+                return;
+            }
+            var supplierVos = data.supplierVos;
+            var html = "<option value=\"-1\">所有供应商</option>";
+            if(null == supplierVos || supplierVos.length < 1)
+            {
+                $("#supplier-list").html(html);
+                return;
+            }
+            var supplierVo;
+            for (var i = 0; i < supplierVos.length; i++){
+                supplierVo = supplierVos[i];
+                html = html + "<option value=\""+supplierVo.supplierId+"\">"+supplierVo.supplier+"</option>";
+            }
+            $("#supplier-list").html(html);
+        },
+        function (e) {
+            alert("network error!");
+        })
+}
+
 $(document).ready(function () {
     initTypeList();
+    initSupplierList();
 })

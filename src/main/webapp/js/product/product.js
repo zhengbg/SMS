@@ -7,6 +7,7 @@ var endTime = "";
 var productName ="";
 var productId = "";
 var productTypeId = "";
+var supplierId = "";
 var flag = false;
 $("#pro-plus").on('click',function () {
     location.href = "../../product-add.jsp";
@@ -16,6 +17,10 @@ $("#search-btn").on('click',function () {
     productTypeId = $("#type-list :selected").val();
     if(productTypeId == -1){
         productTypeId = "";
+    }
+    supplierId = $("#supplier-list :selected").val();
+    if(supplierId == -1){
+        supplierId = "";
     }
     productId = $("#productId").val();
     productName = $("#productName").val();
@@ -99,8 +104,8 @@ function paintData(data) {
         html = html + "<td>" + product.supplier + "</td>";
         html = html + "<td>" + product.createTime + "</td>";
         html = html + "<td><div class=\"am-btn-group am-btn-group-xs\"><div class=\"am-btn-group am-btn-group-xs\">";
-        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-secondary\" onclick=\"editProduct('"+product.productId+"')\"><span class=\"am-icon-pencil-square-vo\"></span> 编辑</span>";
-        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\" onclick=\"delProduct('"+product.productId+"')\"><span class=\"am-icon-trash-vo\"></span> 删除</span>";
+        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-secondary\" onclick=\"editProduct('"+product.productId+"')\"><span class=\"am-icon-pencil-square-o\"></span> 编辑</span>";
+        html = html + "<span class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\" onclick=\"delProduct('"+product.productId+"')\"><span class=\"am-icon-trash-o\"></span> 删除</span>";
         html = html + "</div></div></td>";
         html = html + "</tr>";
     }
@@ -112,6 +117,7 @@ function paintData(data) {
 }
 function query() {
     var data = {
+        "supplierId":supplierId,
         "productTypeId":productTypeId,
         "minCreateTime":startTime,
         "maxCreateTime":endTime,
@@ -161,7 +167,33 @@ function initTypeList() {
         alert("network error!");
     })
 }
+function initSupplierList(){
+    ajaxUtil.doPostAjax('/supplier/querySupplier',{},
+        function (data) {
+            if(data.resultCode != '000000'){
+                alert(data.resultDesc);
+                return;
+            }
+            var supplierVos = data.supplierVos;
+            var html = "<option value=\"-1\">所有供应商</option>";
+            if(null == supplierVos || supplierVos.length < 1)
+            {
+                $("#supplier-list").html(html);
+                return;
+            }
+            var supplierVo;
+            for (var i = 0; i < supplierVos.length; i++){
+                supplierVo = supplierVos[i];
+                html = html + "<option value=\""+supplierVo.supplierId+"\">"+supplierVo.supplier+"</option>";
+            }
+            $("#supplier-list").html(html);
+        },
+        function (e) {
+            alert("network error!");
+        })
+}
 $(document).ready(function () {
     initTypeList();
+    initSupplierList();
     query();
 })

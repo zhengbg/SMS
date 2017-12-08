@@ -14,7 +14,7 @@ function saveProduct() {
     var scale = $("#scale").val();
     var price = $("#price").val();
   /*  var stock = $("#stock").val();*/
-    var supplier = $("#supplier").val();
+    var supplierId = $("#supplier-list :selected").val();
     var memo = $("#memo").val();
     var lastUpdateTime = $("#lastUpdateTime").val();
     if (!!!productId) {
@@ -41,8 +41,8 @@ function saveProduct() {
         alert("商品数量不能为空");
         return;
     }*/
-    if (!!!supplier) {
-        alert("商品所属供应商不能为空");
+    if (supplierId == -1) {
+        alert("请选择供应商");
         return;
     }
     var data = {
@@ -51,7 +51,7 @@ function saveProduct() {
         "productTypeId": productTypeId,
         "productScale": scale,
         "price": price,
-        "supplier": supplier,
+        "supplierId": supplierId,
        /* "stock": stock,*/
         "lastUpdateTime": lastUpdateTime,
         "memo": memo
@@ -81,7 +81,8 @@ function paintTypeList(data) {
         html = html + "<option value=\"" + productType.productTypeId + "\">" + productType.productTypeName + "</option>";
     }
     $("#type-list").html(html);
-    find();
+    initSupplierList();
+
 }
 function initTypeList() {
     ajaxUtil.doPostAjax('/productType/queryProductType', {},
@@ -112,12 +113,40 @@ function find() {
             $("#productName").val(productVo.productName);
             $("#type-list").val(productVo.productTypeId);
             $("#type-list").trigger('changed.selected.amui');
+            $("#supplier-list").val(productVo.supplierId);
+            $("#supplier-list").trigger('changed.selected.amui');
             $("#scale").val(productVo.productScale);
             $("#price").val(productVo.price);
             $("#stock").val(productVo.stock);
             $("#supplier").val(productVo.supplier);
             $("#lastUpdateTime").val(productVo.lastUpdateTime)
             $("#memo").val(productVo.memo);
+        },
+        function (e) {
+            alert("network error!");
+        })
+}
+function initSupplierList(){
+    ajaxUtil.doPostAjax('/supplier/querySupplier',{},
+        function (data) {
+            if(data.resultCode != '000000'){
+                alert(data.resultDesc);
+                return;
+            }
+            var supplierVos = data.supplierVos;
+            var html = "<option value=\"-1\">所有供应商</option>";
+            if(null == supplierVos || supplierVos.length < 1)
+            {
+                $("#supplier-list").html(html);
+                return;
+            }
+            var supplierVo;
+            for (var i = 0; i < supplierVos.length; i++){
+                supplierVo = supplierVos[i];
+                html = html + "<option value=\""+supplierVo.supplierId+"\">"+supplierVo.supplier+"</option>";
+            }
+            $("#supplier-list").html(html);
+            find();
         },
         function (e) {
             alert("network error!");
