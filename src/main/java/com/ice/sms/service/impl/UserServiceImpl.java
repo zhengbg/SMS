@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService
 		}
 		if (! StringUtils.isEmpty (req.getPageIndex ()))
 		{
-			params.put ("start", (req.getPageIndex () - 1) / req.getPageSize ());
+			params.put ("start", (req.getPageIndex () - 1) * req.getPageSize ());
 		}
 		if (! StringUtils.isEmpty (req.getPageSize ()))
 		{

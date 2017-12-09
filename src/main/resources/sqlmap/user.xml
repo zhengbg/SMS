@@ -107,6 +107,7 @@
         <if test="type != null">
             AND u_type = #{type}
         </if>
+        AND u_type != 0
     </select>
 
 </mapper>
